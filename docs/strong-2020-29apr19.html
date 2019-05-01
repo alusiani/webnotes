@@ -13442,7 +13442,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[109]:</div>
+<div class="prompt input_prompt">In&nbsp;[114]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13460,8 +13460,13 @@ div#notebook {
 <span class="k">end</span>
 <span class="c">##--- range of covariance with extra 20% margin</span>
 <span class="n">cov_clims</span> <span class="o">=</span> <span class="nd">@df</span> <span class="n">df_stat</span> <span class="n">identity</span><span class="p">(</span>
-  <span class="p">(</span><span class="n">minimum</span><span class="p">(</span><span class="o">:</span><span class="n">cov</span><span class="p">)</span><span class="o">-</span><span class="mf">0.2</span><span class="o">*</span><span class="p">(</span><span class="n">maximum</span><span class="p">(</span><span class="o">:</span><span class="n">cov</span><span class="p">)</span><span class="o">-</span><span class="n">minimum</span><span class="p">(</span><span class="o">:</span><span class="n">cov</span><span class="p">)),</span> <span class="n">maximum</span><span class="p">(</span><span class="o">:</span><span class="n">cov</span><span class="p">)</span><span class="o">+</span><span class="mf">0.2</span><span class="o">*</span><span class="p">(</span><span class="n">maximum</span><span class="p">(</span><span class="o">:</span><span class="n">cov</span><span class="p">)</span><span class="o">-</span><span class="n">minimum</span><span class="p">(</span><span class="o">:</span><span class="n">cov</span><span class="p">)))</span>
+  <span class="p">(</span>
+    <span class="n">minimum</span><span class="p">(</span><span class="o">:</span><span class="n">cov</span><span class="p">)</span><span class="o">-</span><span class="mf">0.2</span><span class="o">*</span><span class="p">(</span><span class="n">maximum</span><span class="p">(</span><span class="o">:</span><span class="n">cov</span><span class="p">)</span><span class="o">-</span><span class="n">minimum</span><span class="p">(</span><span class="o">:</span><span class="n">cov</span><span class="p">)),</span>
+    <span class="n">maximum</span><span class="p">(</span><span class="o">:</span><span class="n">cov</span><span class="p">)</span><span class="o">+</span><span class="mf">0.2</span><span class="o">*</span><span class="p">(</span><span class="n">maximum</span><span class="p">(</span><span class="o">:</span><span class="n">cov</span><span class="p">)</span><span class="o">-</span><span class="n">minimum</span><span class="p">(</span><span class="o">:</span><span class="n">cov</span><span class="p">))</span>
+  <span class="p">)</span>
 <span class="p">)</span>
+<span class="c">## println(&quot;range of covariance values:&quot;, cov_clims)</span>
+
 <span class="c">##</span>
 <span class="c">## plot</span>
 <span class="c">##</span>
@@ -13473,7 +13478,7 @@ div#notebook {
   <span class="n">xlabel</span><span class="o">=</span><span class="s">&quot;Energy [GeV]&quot;</span><span class="p">,</span>
   <span class="n">ylabel</span><span class="o">=</span><span class="s">&quot;Energy [GeV]&quot;</span>
 <span class="p">)</span>
-<span class="c"># println(&quot;range of covariance values:&quot;, clims)</span>
+<span class="c">## println(&quot;range of covariance values:&quot;, clims)</span>
 </pre></div>
 
     </div>
@@ -13486,7 +13491,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[109]:</div>
+    <div class="prompt output_prompt">Out[114]:</div>
 
 
 
