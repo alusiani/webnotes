@@ -13141,7 +13141,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[68]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="k">using</span> <span class="n">DataFrames</span>
@@ -13161,7 +13161,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">Plots</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">700</span><span class="p">,</span><span class="mi">400</span><span class="p">))</span>
@@ -13179,7 +13179,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[31]:</div>
+    <div class="prompt output_prompt">Out[2]:</div>
 
 
 
@@ -13264,7 +13264,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[117]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13283,7 +13283,6 @@ div#notebook {
 <span class="c">## build a dataframe where for each covariance coefficient one reports</span>
 <span class="c">## the covariance matrix row and column energy bin lower and higher limit</span>
 <span class="c">##</span>
-<span class="n">df_stat_save</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="n">df_stat</span><span class="p">)</span>
 <span class="n">E_l_vec</span> <span class="o">=</span> <span class="kt">Vector</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_l</span><span class="p">])</span>
 <span class="n">E_h_vec</span> <span class="o">=</span> <span class="kt">Vector</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h</span><span class="p">])</span>
 <span class="n">E_lh</span> <span class="o">=</span> <span class="p">[</span> <span class="p">[</span><span class="n">E_l_vec</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">E_h_vec</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="k">for</span> <span class="n">i</span> <span class="kp">in</span> <span class="mi">1</span><span class="o">:</span><span class="n">nrow</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="p">]</span>
@@ -13293,8 +13292,8 @@ div#notebook {
 <span class="n">insertcols!</span><span class="p">(</span><span class="n">df_stat</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">E_h_c</span> <span class="o">=</span> <span class="p">[</span><span class="n">E_lh_sq</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="kp">in</span> <span class="mi">1</span><span class="o">:</span><span class="n">length</span><span class="p">(</span><span class="n">E_lh_sq</span><span class="p">)])</span>
 <span class="n">insertcols!</span><span class="p">(</span><span class="n">df_stat</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">E_l_r</span> <span class="o">=</span> <span class="p">[</span><span class="n">E_lh_sq</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="kp">in</span> <span class="mi">1</span><span class="o">:</span><span class="n">length</span><span class="p">(</span><span class="n">E_lh_sq</span><span class="p">)])</span>
 <span class="n">insertcols!</span><span class="p">(</span><span class="n">df_stat</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">E_h_r</span> <span class="o">=</span> <span class="p">[</span><span class="n">E_lh_sq</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="kp">in</span> <span class="mi">1</span><span class="o">:</span><span class="n">length</span><span class="p">(</span><span class="n">E_lh_sq</span><span class="p">)])</span>
-<span class="n">insertcols!</span><span class="p">(</span><span class="n">df_stat</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">E_c</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_stat_new</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_l_c</span><span class="p">]</span><span class="o">+</span><span class="n">df_stat_new</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h_c</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">insertcols!</span><span class="p">(</span><span class="n">df_stat</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">E_r</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_stat_new</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_l_r</span><span class="p">]</span><span class="o">+</span><span class="n">df_stat_new</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h_r</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">insertcols!</span><span class="p">(</span><span class="n">df_stat</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">E_c</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_stat</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_l_c</span><span class="p">]</span><span class="o">+</span><span class="n">df_stat</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h_c</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">insertcols!</span><span class="p">(</span><span class="n">df_stat</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">E_r</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_stat</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_l_r</span><span class="p">]</span><span class="o">+</span><span class="n">df_stat</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h_r</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">first</span><span class="p">(</span><span class="n">df_stat</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="nb">nothing</span>
 </pre></div>
@@ -13325,7 +13324,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[66]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">pl1</span> <span class="o">=</span> <span class="nd">@df</span> <span class="n">df</span> <span class="n">plot</span><span class="p">(</span>
@@ -13352,7 +13351,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[66]:</div>
+    <div class="prompt output_prompt">Out[10]:</div>
 
 
 
@@ -13370,7 +13369,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[67]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">pl2</span> <span class="o">=</span> <span class="nd">@df</span> <span class="n">df</span> <span class="n">plot</span><span class="p">(</span>
@@ -13398,7 +13397,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[67]:</div>
+    <div class="prompt output_prompt">Out[11]:</div>
 
 
 
@@ -13416,7 +13415,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[114]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13443,7 +13442,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[114]:</div>
+    <div class="prompt output_prompt">Out[12]:</div>
 
 
 
