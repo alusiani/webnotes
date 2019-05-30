@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>strong-2020-29apr19-old</title>
+<title>tau-sf-3pi-aleph-2014-may19</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13113,46 +13113,42 @@ div#notebook {
   <div tabindex="-1" id="notebook" class="border-box-sizing">
     <div class="container" id="notebook-container">
 
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="BaBar-$\sigma(e^+e^--\rightarrow-\pi^+\pi^--(\gamma))$">BaBar $\sigma(e^+e^- \rightarrow \pi^+\pi^- (\gamma))$<a class="anchor-link" href="#BaBar-$\sigma(e^+e^--\rightarrow-\pi^+\pi^--(\gamma))$">&#182;</a></h1><h2 id="29-Apr-2019">29 Apr 2019<a class="anchor-link" href="#29-Apr-2019">&#182;</a></h2><p>The latest BaBar measurements are published in two papers that point to exatly the same supplemental data</p>
-<ul>
-<li><p>B. Aubert et al. [BaBar Collaboration], <a href="https://doi.org/10.1103/PhysRevLett.103.231801">Phys. Rev. Lett. 103 (2009) 231801</a>, <a href="http://inspirehep.net/record/829441">inspirehep</a>,<br />
-"Precise measurement of the e+ e- ---&gt; pi+ pi- (gamma) cross section with the Initial State Radiation method at BABAR"</p>
-</li>
-<li><p>J. P. Lees et al. [BaBar Collaboration], <a href="https://doi.org/10.1103/PhysRevD.86.032013">Phys. Rev. D 86 (2012) 032013</a>, <a href="http://inspirehep.net/record/1114155">inspirehep</a>,<br />
-"Precise Measurement of the e+e−→π+π−(γ)e+e−→π+π−(γ) Cross Section with the Initial-State Radiation Method at BABAR"</p>
-<ul>
-<li><a href="http://ftp.aip.org/epaps/phys_rev_lett/E-PRLTAO-103-045950/">data</a></li>
-</ul>
-</li>
-</ul>
-<p>The data report the "<strong>bare cross section including FSR</strong>" and in detail:</p>
-<ul>
-<li>the cross-section and its total undertainty in variable-width bins of energy</li>
-<li>the per-mil relative systematic uncertainty (per energy bin, 100% correlated on all bins)</li>
-<li>the statistical correlation between any two bins of cross-section</li>
-</ul>
-<p>In the following the data are used to show a few plots.</p>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">##</span>
+<span class="c1">## plot ALEPH tau -&gt; 3pi nu spectral function</span>
+<span class="c1">##</span>
+<span class="c1">## data provided in:</span>
+<span class="c1">## http://aleph.web.lal.in2p3.fr/tau/specfun13/aleph13_3pi.f</span>
+<span class="c1">##</span>
+<span class="c1">## information on the content:</span>
+<span class="c1">##</span>
+<span class="c1">## sbin(*): mass squared bin center in GeV**2</span>
+<span class="c1">## dsbin(*): bin size in GeV**2</span>
+<span class="c1">## sfm2(*): normalized invariant mass squared distribution</span>
+<span class="c1">## dsta(*): statistical errors</span>
+<span class="c1">## dsys(*): systematical erorrs</span>
+<span class="c1">## corsta(*,*): stat correlation coefficients in %</span>
+<span class="c1">## corsys(*,*): syst correlation coefficients in %</span>
+<span class="c1">##</span>
+</pre></div>
 
+    </div>
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="kn">library</span><span class="p">(</span>repr<span class="p">,</span> quietly<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>ggplot2<span class="p">,</span> quietly<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>scales<span class="p">,</span> quietly<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>RColorBrewer<span class="p">,</span> quietly<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>latex2exp<span class="p">,</span> quietly<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>rminuit2<span class="p">,</span> quietly<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>Cairo<span class="p">,</span> quietly<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>svglite<span class="p">,</span> quietly<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>stringr<span class="p">,</span> quietly<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="kn">library</span><span class="p">(</span>ggplot2<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>scales<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>latex2exp<span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13169,13 +13165,22 @@ div#notebook {
 <span class="c1">## open graphic device</span>
 <span class="c1">##</span>
 
-my.width <span class="o">=</span> <span class="m">9</span>
 my.height <span class="o">=</span> <span class="m">5</span>
+my.width <span class="o">=</span> my.height<span class="o">*</span><span class="m">1.2</span>
 my.width.pixels <span class="o">=</span> <span class="m">560</span>
 
 rc <span class="o">=</span> <span class="kp">try</span><span class="p">(</span>dev.off<span class="p">(),</span> silent<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
-<span class="c1">## rc = dev.new(width=my.width, height=my.height, dpi = my.width.pixels / my.width)</span>
-rc <span class="o">=</span> dev.new<span class="p">(</span>width<span class="o">=</span>my.width<span class="p">,</span> height<span class="o">=</span>my.height<span class="p">,</span> dpi <span class="o">=</span> my.width.pixels <span class="o">/</span> my.width<span class="p">)</span>
+dev.new<span class="p">(</span>width<span class="o">=</span>my.width<span class="p">,</span> height<span class="o">=</span>my.height<span class="p">,</span> dpi<span class="o">=</span>my.width.pixels <span class="o">/</span> my.width<span class="p">)</span>
+
+<span class="c1">##--- smaller plots in notebook</span>
+<span class="kp">options</span><span class="p">(</span>
+  repr.plot.width <span class="o">=</span> my.width<span class="p">,</span>
+  repr.plot.height <span class="o">=</span> my.height<span class="p">,</span>
+  repr.plot.res <span class="o">=</span> <span class="m">100</span><span class="p">,</span>
+  family<span class="o">=</span><span class="s">&quot;mono&quot;</span><span class="p">,</span>
+  <span class="c1">## jupyter.plot_mimetypes = &#39;image/png&#39;</span>
+  jupyter.plot_mimetypes <span class="o">=</span> <span class="s">&#39;image/svg+xml&#39;</span>
+<span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13189,26 +13194,8 @@ rc <span class="o">=</span> dev.new<span class="p">(</span>width<span class="o">
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">##</span>
-<span class="c1">## jupyter options</span>
-<span class="c1">##</span>
-<span class="kp">options</span><span class="p">(</span>repr.plot.width<span class="o">=</span>my.width<span class="p">,</span> repr.plot.height <span class="o">=</span> my.height<span class="p">,</span> repr.plot.res <span class="o">=</span> <span class="m">100</span><span class="p">)</span>
-<span class="kp">options</span><span class="p">(</span>jupyter.plot_mimetypes <span class="o">=</span> <span class="s">&quot;image/svg+xml&quot;</span><span class="p">)</span>
-<span class="c1">## options(jupyter.plot_mimetypes = &quot;image/png&quot;)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="c1">##</span>
-<span class="c1">## plot functions</span>
-<span class="c1">## see http://t-redactyl.io/blog/2016/03/creating-plots-in-r-using-ggplot2-part-9-function-plots.html</span>
+<span class="c1">## ggplot2 theme, see</span>
+<span class="c1">## http://t-redactyl.io/blog/2016/03/creating-plots-in-r-using-ggplot2-part-9-function-plots.html</span>
 <span class="c1">##</span>
 
 <span class="c1">##--- configure ggplot2 theme</span>
@@ -13232,23 +13219,69 @@ theme_update<span class="p">(</span>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">##</span>
+<span class="c1">## save plot</span>
+<span class="c1">##</span>
+save_plot <span class="o">=</span> <span class="kr">function</span><span class="p">(</span>name<span class="p">,</span> width<span class="o">=</span>my.width<span class="p">,</span> height<span class="o">=</span>my.height<span class="p">,</span> width.pixels<span class="o">=</span>my.width.pixels<span class="p">)</span> <span class="p">{</span>
+  dpi <span class="o">=</span> width.pixels<span class="o">/</span>width
+  file.png <span class="o">=</span> <span class="kp">paste</span><span class="p">(</span>name<span class="p">,</span> <span class="s">&quot;png&quot;</span><span class="p">,</span> sep<span class="o">=</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
+  ggsave<span class="p">(</span>filename<span class="o">=</span>file.png<span class="p">,</span> width<span class="o">=</span>width<span class="p">,</span> height<span class="o">=</span>height<span class="p">,</span> dpi<span class="o">=</span>dpi<span class="p">)</span>
+  <span class="kp">cat</span><span class="p">(</span>file<span class="o">=</span><span class="kp">stderr</span><span class="p">(),</span> <span class="s">&quot;file&quot;</span><span class="p">,</span> file.png<span class="p">,</span> <span class="s">&quot;produced\n&quot;</span><span class="p">)</span>
+  file.pdf <span class="o">=</span> <span class="kp">paste</span><span class="p">(</span>name<span class="p">,</span> <span class="s">&quot;pdf&quot;</span><span class="p">,</span> sep<span class="o">=</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
+  ggsave<span class="p">(</span>filename<span class="o">=</span>file.pdf<span class="p">,</span> width<span class="o">=</span>width<span class="p">,</span> height<span class="o">=</span>height<span class="p">,</span> dpi<span class="o">=</span>dpi<span class="p">)</span>
+  <span class="kp">cat</span><span class="p">(</span>file<span class="o">=</span><span class="kp">stderr</span><span class="p">(),</span> <span class="s">&quot;file&quot;</span><span class="p">,</span> file.pdf<span class="p">,</span> <span class="s">&quot;produced\n&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">##</span>
 <span class="c1">## save last plot</span>
 <span class="c1">##</span>
-save_plot <span class="o">=</span> <span class="kr">function</span><span class="p">(</span>name<span class="p">,</span> plot <span class="o">=</span> last_plot<span class="p">(),</span> width<span class="o">=</span>my.width<span class="p">,</span> height<span class="o">=</span>my.height<span class="p">,</span> horiz.pixels<span class="o">=</span>my.width.pixels<span class="p">)</span> <span class="p">{</span>
-  name <span class="o">=</span> <span class="kp">paste0</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span> name<span class="p">)</span>
-  dpi <span class="o">=</span> my.width.pixels<span class="o">/</span>my.width
+save_plot <span class="o">=</span> <span class="kr">function</span><span class="p">(</span>name<span class="p">,</span> author<span class="o">=</span><span class="s">&quot;HFLAV&quot;</span><span class="p">,</span> title<span class="o">=</span>name<span class="p">,</span> plot<span class="o">=</span>last_plot<span class="p">(),</span>
+                     width<span class="o">=</span>my.width<span class="p">,</span>
+                     height<span class="o">=</span>my.height<span class="p">,</span>
+                     width.pixels<span class="o">=</span>my.width.pixels<span class="p">)</span> <span class="p">{</span>
+  dpi <span class="o">=</span> width.pixels<span class="o">/</span>my.width
   
-  file.png <span class="o">=</span> <span class="kp">paste</span><span class="p">(</span>name<span class="p">,</span> <span class="s">&quot;png&quot;</span><span class="p">,</span> sep<span class="o">=</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
-  <span class="kp">suppressWarnings</span><span class="p">(</span>ggsave<span class="p">(</span>filename<span class="o">=</span>file.png<span class="p">,</span> width<span class="o">=</span>width<span class="p">,</span> height<span class="o">=</span>height<span class="p">,</span> dpi<span class="o">=</span>dpi<span class="p">,</span> bg <span class="o">=</span> <span class="s">&quot;transparent&quot;</span><span class="p">))</span>
-  <span class="kp">cat</span><span class="p">(</span>file<span class="o">=</span><span class="kp">stderr</span><span class="p">(),</span> <span class="s">&quot;file&quot;</span><span class="p">,</span> file.png<span class="p">,</span> <span class="s">&quot;produced\n&quot;</span><span class="p">)</span>
+  <span class="kr">if</span> <span class="p">(</span><span class="kc">TRUE</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">##--- PNG</span>
+    file.png <span class="o">=</span> <span class="kp">paste</span><span class="p">(</span>name<span class="p">,</span> <span class="s">&quot;png&quot;</span><span class="p">,</span> sep<span class="o">=</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
+    rc <span class="o">=</span> ggsave<span class="p">(</span>filename<span class="o">=</span>file.png<span class="p">,</span> plot<span class="o">=</span>plot<span class="p">,</span> width<span class="o">=</span>width<span class="p">,</span> height<span class="o">=</span>height<span class="p">,</span> dpi<span class="o">=</span>dpi<span class="p">)</span>
+    <span class="c1">## file.png.conv = paste(name, &quot;-conv.&quot;, &quot;png&quot;, sep=&quot;&quot;)</span>
+    <span class="c1">## system2(&quot;convert&quot;,</span>
+    <span class="c1">##         c(&quot;-trim&quot;, &quot;-border&quot;, &quot;8x8&quot;, &quot;-bordercolor&quot;, &quot;white&quot;, file.png,</span>
+    <span class="c1">##           file.png.conv),</span>
+    <span class="c1">##         stdout=TRUE, stderr=TRUE)</span>
+    <span class="c1">## system2(&quot;mv&quot;, c(&quot;-f&quot;, file.png.conv, file.png), stdout=TRUE, stderr=TRUE)</span>
+    <span class="kp">cat</span><span class="p">(</span>file<span class="o">=</span><span class="kp">stderr</span><span class="p">(),</span> <span class="s">&quot;file&quot;</span><span class="p">,</span> file.png<span class="p">,</span> <span class="s">&quot;produced\n&quot;</span><span class="p">)</span>
+  <span class="p">}</span>
+
+  <span class="kr">if</span> <span class="p">(</span><span class="kc">TRUE</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">##--- PDF</span>
+    file.pdf <span class="o">=</span> <span class="kp">paste</span><span class="p">(</span>name<span class="p">,</span> <span class="s">&quot;pdf&quot;</span><span class="p">,</span> sep<span class="o">=</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
+    rc <span class="o">=</span> ggsave<span class="p">(</span>filename<span class="o">=</span>file.pdf<span class="p">,</span> plot<span class="o">=</span>plot<span class="p">,</span> width<span class="o">=</span>width<span class="p">,</span> height<span class="o">=</span>height<span class="p">,</span> dpi<span class="o">=</span>dpi<span class="p">)</span>
+    <span class="kp">cat</span><span class="p">(</span>file<span class="o">=</span><span class="kp">stderr</span><span class="p">(),</span> <span class="s">&quot;file&quot;</span><span class="p">,</span> file.pdf<span class="p">,</span> <span class="s">&quot;produced\n&quot;</span><span class="p">)</span>
+    <span class="kp">cat</span><span class="p">(</span><span class="s">&quot;exiftool... &quot;</span><span class="p">)</span>
+    <span class="c1">## system(paste0(&quot;exiftool&quot;, &quot; -Author=&quot;, author, &quot; -Title=&quot;, title, &quot; &quot;, name, &quot;.pdf&quot;))</span>
+    <span class="kp">system2</span><span class="p">(</span><span class="s">&quot;exiftool&quot;</span><span class="p">,</span>
+            <span class="kp">shQuote</span><span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="kp">paste0</span><span class="p">(</span><span class="s">&quot;-Author=&quot;</span><span class="p">,</span> author<span class="p">),</span>
+                      <span class="kp">paste0</span><span class="p">(</span><span class="s">&quot;-Title=&quot;</span><span class="p">,</span> title<span class="p">),</span>
+                      <span class="s">&quot;-delete_original&quot;</span><span class="p">,</span>
+                      <span class="kp">paste0</span><span class="p">(</span>name<span class="p">,</span> <span class="s">&quot;.pdf&quot;</span><span class="p">))))</span>
+  <span class="p">}</span>
+
+  <span class="kr">if</span> <span class="p">(</span><span class="kc">FALSE</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">##--- SVG</span>
+    file.svg <span class="o">=</span> <span class="kp">paste</span><span class="p">(</span>name<span class="p">,</span> <span class="s">&quot;svg&quot;</span><span class="p">,</span> sep<span class="o">=</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
+    rc <span class="o">=</span> ggsave<span class="p">(</span>filename<span class="o">=</span>file.svg<span class="p">,</span> plot<span class="o">=</span>plot<span class="p">,</span> width<span class="o">=</span>width<span class="p">,</span> height<span class="o">=</span>height<span class="p">,</span> dpi<span class="o">=</span>dpi<span class="p">)</span>
+    <span class="kp">cat</span><span class="p">(</span>file<span class="o">=</span><span class="kp">stderr</span><span class="p">(),</span> <span class="s">&quot;file&quot;</span><span class="p">,</span> file.svg<span class="p">,</span> <span class="s">&quot;produced\n&quot;</span><span class="p">)</span>
+  <span class="p">}</span>
   
-  file.pdf <span class="o">=</span> <span class="kp">paste</span><span class="p">(</span>name<span class="p">,</span> <span class="s">&quot;pdf&quot;</span><span class="p">,</span> sep<span class="o">=</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
-  <span class="kp">suppressWarnings</span><span class="p">(</span>ggsave<span class="p">(</span>filename<span class="o">=</span>file.pdf<span class="p">,</span> width<span class="o">=</span>width<span class="p">,</span> height<span class="o">=</span>height<span class="p">,</span> dpi<span class="o">=</span>dpi<span class="p">,</span> bg <span class="o">=</span> <span class="s">&quot;transparent&quot;</span><span class="p">))</span>
-  <span class="kp">cat</span><span class="p">(</span>file<span class="o">=</span><span class="kp">stderr</span><span class="p">(),</span> <span class="s">&quot;file&quot;</span><span class="p">,</span> file.pdf<span class="p">,</span> <span class="s">&quot;produced\n&quot;</span><span class="p">)</span>
-  
-  file.svg <span class="o">=</span> <span class="kp">paste</span><span class="p">(</span>name<span class="p">,</span> <span class="s">&quot;svg&quot;</span><span class="p">,</span> sep<span class="o">=</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
-  <span class="kp">suppressWarnings</span><span class="p">(</span>ggsave<span class="p">(</span>filename<span class="o">=</span>file.svg<span class="p">,</span> width<span class="o">=</span>width<span class="p">,</span> height<span class="o">=</span>height<span class="p">,</span> dpi<span class="o">=</span>dpi<span class="p">,</span> bg <span class="o">=</span> <span class="s">&quot;transparent&quot;</span><span class="p">))</span>
-  <span class="kp">cat</span><span class="p">(</span>file<span class="o">=</span><span class="kp">stderr</span><span class="p">(),</span> <span class="s">&quot;file&quot;</span><span class="p">,</span> file.svg<span class="p">,</span> <span class="s">&quot;produced\n&quot;</span><span class="p">)</span>
+  <span class="kr">if</span> <span class="p">(</span><span class="kc">FALSE</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">##--- TIKZ</span>
+    file.tex <span class="o">=</span> <span class="kp">paste</span><span class="p">(</span>name<span class="p">,</span> <span class="s">&quot;tex&quot;</span><span class="p">,</span> sep<span class="o">=</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
+    tikz<span class="p">(</span>file.tex<span class="p">,</span> standAlone <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span> width<span class="o">=</span>width<span class="p">,</span> height<span class="o">=</span>height<span class="p">,</span> sanitize<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+    grid.draw<span class="p">(</span>plot<span class="p">)</span>
+    dev.off<span class="p">()</span>
+    <span class="kp">cat</span><span class="p">(</span>file<span class="o">=</span><span class="kp">stderr</span><span class="p">(),</span> <span class="s">&quot;file&quot;</span><span class="p">,</span> file.tex<span class="p">,</span> <span class="s">&quot;produced\n&quot;</span><span class="p">)</span>
+  <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -13262,8 +13295,7 @@ save_plot <span class="o">=</span> <span class="kr">function</span><span class="
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="c1">##--- get all data</span>
-babar09_lines <span class="o">=</span> <span class="kp">readLines</span><span class="p">(</span><span class="s">&quot;babar-2009/BABAR_ISR2pi_EPAPS.txt&quot;</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span>tau3pi_sf_web <span class="o">=</span> <span class="s">&quot;http://aleph.web.lal.in2p3.fr/tau/specfun13/aleph13_3pi.f&quot;</span>
 </pre></div>
 
     </div>
@@ -13276,9 +13308,7 @@ babar09_lines <span class="o">=</span> <span class="kp">readLines</span><span cl
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="c1">##--- get begin and end of data sections</span>
-babar09_beg <span class="o">=</span> <span class="kp">grep</span><span class="p">(</span><span class="s">&quot;^\\*\\*\\*\\*\\*\\*\\*\\*&quot;</span><span class="p">,</span> babar09_lines<span class="p">)</span>
-babar09_end <span class="o">=</span> <span class="kt">c</span><span class="p">(</span> <span class="kp">tail</span><span class="p">(</span>babar09_beg<span class="p">,</span> <span class="m">-1</span><span class="p">),</span> <span class="kp">length</span><span class="p">(</span>babar09_lines<span class="p">))</span>
+<div class=" highlight hl-r"><pre><span></span>tau3pi_sf_code <span class="o">=</span> <span class="kp">readLines</span><span class="p">(</span>tau3pi_sf_web<span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13291,17 +13321,38 @@ babar09_end <span class="o">=</span> <span class="kt">c</span><span class="p">(<
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="c1">##--- get total systematic uncertainties</span>
-rc <span class="o">=</span> str_match<span class="p">(</span>babar09_lines<span class="p">[</span>babar09_beg<span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="o">:</span>babar09_end<span class="p">[</span><span class="m">2</span><span class="p">]],</span> <span class="s">&quot;^\\s*(\\S+)\\s*:\\s*(\\S+)\\s+(\\S+)\\s+(\\S+)&quot;</span><span class="p">)</span>
-rc <span class="o">=</span> rc<span class="p">[</span><span class="o">!</span><span class="kp">is.na</span><span class="p">(</span>rc<span class="p">[,</span><span class="m">1</span><span class="p">]),</span> <span class="p">]</span>
-df <span class="o">=</span> <span class="kt">data.frame</span><span class="p">(</span>
-  E_l <span class="o">=</span> <span class="kp">as.numeric</span><span class="p">(</span>rc<span class="p">[,</span> <span class="m">2</span><span class="p">]),</span>
-  E_h <span class="o">=</span> <span class="kp">as.numeric</span><span class="p">(</span>rc<span class="p">[,</span> <span class="m">3</span><span class="p">]),</span>
-  sigma <span class="o">=</span> <span class="kp">as.numeric</span><span class="p">(</span>rc<span class="p">[,</span> <span class="m">4</span><span class="p">]),</span>
-  sigma_unc <span class="o">=</span> <span class="kp">as.numeric</span><span class="p">(</span>rc<span class="p">[,</span> <span class="m">5</span><span class="p">])</span>
-<span class="p">)</span>
-df <span class="o">=</span> <span class="kp">within</span><span class="p">(</span>df<span class="p">,</span> <span class="p">{</span>
-  E <span class="o">=</span> <span class="p">(</span>E_l<span class="o">+</span>E_h<span class="p">)</span><span class="o">/</span><span class="m">2</span>
+<div class=" highlight hl-r"><pre><span></span>get_values <span class="o">=</span> <span class="kr">function</span><span class="p">(</span>sf_code<span class="p">,</span> tag<span class="p">)</span> <span class="p">{</span>
+  data_beg <span class="o">=</span> <span class="kp">grep</span><span class="p">(</span><span class="kp">paste0</span><span class="p">(</span><span class="s">&quot;data\\s+&quot;</span><span class="p">,</span> tag<span class="p">),</span> sf_code<span class="p">)[[</span><span class="m">1</span><span class="p">]]</span>
+  data_end <span class="o">=</span> <span class="kp">grep</span><span class="p">(</span><span class="s">&quot;^\\s+\\&amp;&quot;</span><span class="p">,</span> sf_code<span class="p">[</span><span class="o">-</span><span class="p">(</span><span class="m">1</span><span class="o">:</span>data_beg<span class="p">)],</span> invert<span class="o">=</span><span class="kc">TRUE</span><span class="p">)[[</span><span class="m">1</span><span class="p">]]</span>
+  data_lines <span class="o">=</span> sf_code<span class="p">[(</span>data_beg<span class="m">+1</span><span class="p">)</span><span class="o">:</span><span class="p">(</span>data_beg<span class="o">+</span>data_end<span class="m">-1</span><span class="p">)]</span>
+  data_lines <span class="o">=</span> <span class="kp">sub</span><span class="p">(</span><span class="s">&quot;^.*\\&amp;&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> data_lines<span class="p">)</span>
+  data_lines <span class="o">=</span> <span class="kp">sub</span><span class="p">(</span><span class="s">&quot;/\\s*$&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> data_lines<span class="p">)</span>
+  data_lines <span class="o">=</span> <span class="kp">gsub</span><span class="p">(</span><span class="s">&quot;^\\s+|\\s+$&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> data_lines<span class="p">)</span>
+  data_lines <span class="o">=</span> <span class="kp">paste</span><span class="p">(</span>data_lines<span class="p">,</span> collapse <span class="o">=</span> <span class="s">&quot; &quot;</span><span class="p">)</span>
+  <span class="kp">as.numeric</span><span class="p">(</span><span class="kp">unlist</span><span class="p">(</span><span class="kp">strsplit</span><span class="p">(</span>data_lines<span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">)))</span>
+<span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span>sf_df <span class="o">=</span> <span class="kt">data.frame</span><span class="p">(</span>
+  sbin <span class="o">=</span> get_values<span class="p">(</span>tau3pi_sf_code<span class="p">,</span> <span class="s">&quot;sbin&quot;</span><span class="p">),</span>
+  dsbin <span class="o">=</span> get_values<span class="p">(</span>tau3pi_sf_code<span class="p">,</span> <span class="s">&quot;dsbin&quot;</span><span class="p">),</span>
+  sfm2 <span class="o">=</span> get_values<span class="p">(</span>tau3pi_sf_code<span class="p">,</span> <span class="s">&quot;sfm2&quot;</span><span class="p">),</span>
+  dsta <span class="o">=</span> get_values<span class="p">(</span>tau3pi_sf_code<span class="p">,</span> <span class="s">&quot;dsta&quot;</span><span class="p">),</span>
+  dsys <span class="o">=</span> get_values<span class="p">(</span>tau3pi_sf_code<span class="p">,</span> <span class="s">&quot;dsys&quot;</span><span class="p">)</span>
+  <span class="p">)</span>
+sf_df <span class="o">=</span> <span class="kp">within</span><span class="p">(</span>sf_df<span class="p">,</span> <span class="p">{</span>
+  sfd <span class="o">=</span> sfm2 <span class="o">/</span> dsbin
+  sfd_unc <span class="o">=</span> <span class="kp">sqrt</span><span class="p">(</span>dsta<span class="o">^</span><span class="m">2</span> <span class="o">+</span> dsys<span class="o">^</span><span class="m">2</span><span class="p">)</span> <span class="o">/</span> dsbin
 <span class="p">})</span>
 </pre></div>
 
@@ -13315,111 +13366,24 @@ df <span class="o">=</span> <span class="kp">within</span><span class="p">(</spa
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="c1">##--- get low/high E bins limits</span>
-rc <span class="o">=</span> str_match<span class="p">(</span>babar09_lines<span class="p">[</span>babar09_beg<span class="p">[</span><span class="m">3</span><span class="p">]</span><span class="o">:</span>babar09_end<span class="p">[</span><span class="m">3</span><span class="p">]],</span>
-               <span class="kp">paste0</span><span class="p">(</span><span class="s">&quot;^\\s*&quot;</span><span class="p">,</span> <span class="kp">paste</span><span class="p">(</span><span class="kp">rep</span><span class="p">(</span><span class="s">&quot;([^-]+)-([^-\\s]+)&quot;</span><span class="p">,</span> <span class="m">8</span><span class="p">),</span> collapse<span class="o">=</span><span class="s">&quot;\\s+&quot;</span><span class="p">)))</span>
-rc <span class="o">=</span> rc<span class="p">[</span><span class="o">!</span><span class="kp">is.na</span><span class="p">(</span>rc<span class="p">[,</span><span class="m">1</span><span class="p">]),</span> <span class="p">]</span>
-rc <span class="o">=</span> <span class="kp">as.numeric</span><span class="p">(</span><span class="kp">tail</span><span class="p">(</span>rc<span class="p">,</span> <span class="m">-1</span><span class="p">))</span>
-df_syst <span class="o">=</span> <span class="kt">data.frame</span><span class="p">(</span>
-  E_l <span class="o">=</span> rc<span class="p">[</span><span class="kp">seq</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="kp">length</span><span class="p">(</span>rc<span class="p">),</span> <span class="m">2</span><span class="p">)],</span>
-  E_h <span class="o">=</span> rc<span class="p">[</span><span class="kp">seq</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="kp">length</span><span class="p">(</span>rc<span class="p">),</span> <span class="m">2</span><span class="p">)]</span>
-<span class="p">)</span>
-<span class="c1">##--- get permil systematic uncertainty</span>
-rc <span class="o">=</span> str_match<span class="p">(</span>babar09_lines<span class="p">[</span>babar09_beg<span class="p">[</span><span class="m">3</span><span class="p">]</span><span class="o">:</span>babar09_end<span class="p">[</span><span class="m">3</span><span class="p">]],</span>
-               <span class="kp">paste0</span><span class="p">(</span><span class="s">&quot;^\\s*&quot;</span><span class="p">,</span> <span class="kp">paste</span><span class="p">(</span><span class="kp">rep</span><span class="p">(</span><span class="s">&quot;\\(([^\\)]+)\\)&quot;</span><span class="p">,</span> <span class="m">8</span><span class="p">),</span> collapse<span class="o">=</span><span class="s">&quot;\\s+&quot;</span><span class="p">)))</span>
-rc <span class="o">=</span> rc<span class="p">[</span><span class="o">!</span><span class="kp">is.na</span><span class="p">(</span>rc<span class="p">[,</span><span class="m">1</span><span class="p">]),</span> <span class="p">]</span>
-df_syst<span class="o">$</span>unc_permil <span class="o">=</span> <span class="kp">as.numeric</span><span class="p">(</span><span class="kp">tail</span><span class="p">(</span>rc<span class="p">,</span> <span class="m">-1</span><span class="p">))</span>
-df_syst
-</pre></div>
+<div class=" highlight hl-r"><pre><span></span>name <span class="o">=</span> <span class="s">&quot;tau-sf-3pi-aleph-2014-plot-may19&quot;</span>
+title <span class="o">=</span> <span class="s">&quot;SF($\\tau^- \\rightarrow \\pi^-\\pi^+\\pi^-$) ALEPH 2014&quot;</span>
+pdftitle <span class="o">=</span> <span class="s">&quot;SF(tau -&gt; pipipi) ALEPH 2014&quot;</span>
+data <span class="o">=</span> sf_df
 
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="c1">##--- get statistical covariance</span>
-rc <span class="o">=</span> str_match<span class="p">(</span>babar09_lines<span class="p">[</span>babar09_beg<span class="p">[</span><span class="m">4</span><span class="p">]</span><span class="o">:</span>babar09_end<span class="p">[</span><span class="m">4</span><span class="p">]],</span> <span class="s">&quot;^\\s*([0-9\\.Ee\\+\\-]+)&quot;</span><span class="p">)</span>
-rc <span class="o">=</span> <span class="kp">as.numeric</span><span class="p">(</span>rc<span class="p">[</span><span class="o">!</span><span class="kp">is.na</span><span class="p">(</span>rc<span class="p">[,</span><span class="m">1</span><span class="p">]),</span> <span class="m">-1</span><span class="p">])</span>
-stat_cov <span class="o">=</span> <span class="kt">matrix</span><span class="p">(</span>rc<span class="p">,</span> nrow<span class="o">=</span><span class="kp">nrow</span><span class="p">(</span>df<span class="p">),</span> ncol<span class="o">=</span><span class="kp">nrow</span><span class="p">(</span>df<span class="p">))</span>
-<span class="c1">## str(stat_cov)</span>
-df_stat <span class="o">=</span> <span class="kp">expand.grid</span><span class="p">(</span>E_x<span class="o">=</span>df<span class="o">$</span>E<span class="p">,</span> E_y<span class="o">=</span>df<span class="o">$</span>E<span class="p">)</span>
-df_stat<span class="o">$</span>unc <span class="o">=</span> rc
-<span class="c1">## str(df_stat)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="c1">##</span>
-<span class="c1">## plot sigma(e+e- -&gt; pi+pi-)</span>
-<span class="c1">##</span>
-ggplot<span class="p">(</span>df<span class="p">,</span> aes<span class="p">(</span>x <span class="o">=</span> E<span class="p">,</span> y <span class="o">=</span> sigma<span class="p">))</span> <span class="o">+</span>
-  ggtitle<span class="p">(</span>TeX<span class="p">(</span><span class="s">&quot;$e^+e^- - \\pi^+\\pi^- (\\gamma)$&quot;</span><span class="p">))</span> <span class="o">+</span>
-  geom_point<span class="p">(</span>size<span class="o">=</span><span class="m">1</span><span class="p">)</span> <span class="o">+</span>
-  geom_errorbar<span class="p">(</span>aes<span class="p">(</span>ymin<span class="o">=</span>sigma<span class="o">-</span>sigma_unc<span class="p">,</span> ymax<span class="o">=</span>sigma<span class="o">+</span>sigma_unc<span class="p">))</span> <span class="o">+</span>
-  scale_x_continuous<span class="p">(</span>name <span class="o">=</span> TeX<span class="p">(</span><span class="s">&quot;E \\[GeV\\]&quot;</span><span class="p">),</span> breaks<span class="o">=</span>pretty_breaks<span class="p">(</span><span class="m">7</span><span class="p">))</span> <span class="o">+</span>
-  scale_y_continuous<span class="p">(</span>name <span class="o">=</span> TeX<span class="p">(</span><span class="s">&quot;$d\\sigma/dE$&quot;</span><span class="p">),</span>
-                     breaks<span class="o">=</span>pretty_breaks<span class="p">(</span><span class="m">7</span><span class="p">))</span> <span class="o">+</span>
+rc <span class="o">=</span> ggplot<span class="p">(</span>data<span class="p">,</span> aes<span class="p">(</span>x <span class="o">=</span> sbin<span class="p">,</span> y <span class="o">=</span> sfd<span class="p">))</span> <span class="o">+</span>
+  ggtitle<span class="p">(</span>TeX<span class="p">(</span>title<span class="p">))</span> <span class="o">+</span>
+  geom_errorbar<span class="p">(</span>aes<span class="p">(</span>ymin<span class="o">=</span>sfd<span class="o">-</span>sfd_unc<span class="p">,</span>  ymax<span class="o">=</span>sfd<span class="o">+</span>sfd_unc<span class="p">))</span> <span class="o">+</span>
+  geom_point<span class="p">(</span>size<span class="o">=</span><span class="m">0.5</span><span class="p">)</span> <span class="o">+</span>
+  <span class="c1">## stat_function(fun = function(t) fit.rc$fun(t), xlim=c(0,220), col=&quot;DarkBlue&quot;) +</span>
+  scale_x_continuous<span class="p">(</span>name <span class="o">=</span> TeX<span class="p">(</span><span class="s">&quot;$m^2$ \\[GeV$^2$\\]&quot;</span><span class="p">),</span> breaks<span class="o">=</span>pretty_breaks<span class="p">(</span><span class="m">7</span><span class="p">))</span> <span class="o">+</span>
+  scale_y_continuous<span class="p">(</span>name <span class="o">=</span> TeX<span class="p">(</span><span class="s">&quot;spectral function&quot;</span><span class="p">),</span> breaks<span class="o">=</span>pretty_breaks<span class="p">(</span><span class="m">7</span><span class="p">))</span> <span class="o">+</span>
+  <span class="c1">## coord_cartesian(ylim=c(0.988,1.002), xlim=c(0,220)) +</span>
   <span class="kc">NULL</span>
-save_plot<span class="p">(</span><span class="s">&quot;babar09-pippim&quot;</span><span class="p">)</span>
-<span class="kp">getOption</span><span class="p">(</span><span class="s">&quot;jupyter.plot_mimetypes&quot;</span><span class="p">)</span>
-</pre></div>
 
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="c1">##</span>
-<span class="c1">## plot sigma(e+e- -&gt; pi+pi-) at rho peak</span>
-<span class="c1">##</span>
-ggplot<span class="p">(</span>df<span class="p">,</span> aes<span class="p">(</span>x <span class="o">=</span> E<span class="p">,</span> y <span class="o">=</span> sigma<span class="p">))</span> <span class="o">+</span>
-  ggtitle<span class="p">(</span>TeX<span class="p">(</span><span class="s">&quot;$e^+e^- \\rightarrow \\pi^+\\pi^- (\\gamma)$&quot;</span><span class="p">))</span> <span class="o">+</span>
-  geom_point<span class="p">(</span>size<span class="o">=</span><span class="m">1</span><span class="p">)</span> <span class="o">+</span>
-  geom_errorbar<span class="p">(</span>aes<span class="p">(</span>ymin<span class="o">=</span>sigma<span class="o">-</span>sigma_unc<span class="p">,</span> ymax<span class="o">=</span>sigma<span class="o">+</span>sigma_unc<span class="p">))</span> <span class="o">+</span>
-  scale_x_continuous<span class="p">(</span>name <span class="o">=</span> TeX<span class="p">(</span><span class="s">&quot;E \\[GeV\\]&quot;</span><span class="p">),</span> breaks<span class="o">=</span>pretty_breaks<span class="p">(</span><span class="m">7</span><span class="p">))</span> <span class="o">+</span>
-  scale_y_continuous<span class="p">(</span>name <span class="o">=</span> TeX<span class="p">(</span><span class="s">&quot;$d\\sigma/dE$&quot;</span><span class="p">),</span> breaks<span class="o">=</span>pretty_breaks<span class="p">(</span><span class="m">7</span><span class="p">))</span> <span class="o">+</span>
-  coord_cartesian<span class="p">(</span>xlim<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="m">0.65</span><span class="p">,</span> <span class="m">0.85</span><span class="p">))</span> <span class="o">+</span>
-  <span class="kc">NULL</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="c1">##</span>
-<span class="c1">## plot statistical correlation at the rho peak</span>
-<span class="c1">##</span>
-Emin <span class="o">=</span> <span class="m">0.6</span>
-Emax <span class="o">=</span> <span class="m">0.85</span>
-df_stat_rhopeak <span class="o">=</span> <span class="kp">subset</span><span class="p">(</span>df_stat<span class="p">,</span> E_x <span class="o">&gt;=</span> Emin <span class="o">&amp;</span> E_x <span class="o">&lt;=</span> Emax <span class="o">&amp;</span> E_y <span class="o">&gt;=</span> Emin <span class="o">&amp;</span> E_y <span class="o">&lt;=</span> Emax<span class="p">)</span>
-ggplot<span class="p">(</span>df_stat_rhopeak<span class="p">,</span> aes<span class="p">(</span>x<span class="o">=</span>E_x<span class="p">,</span> y<span class="o">=</span>E_y<span class="p">,</span> unc<span class="p">))</span> <span class="o">+</span> geom_tile<span class="p">(</span>aes<span class="p">(</span>fill <span class="o">=</span> unc<span class="p">))</span> <span class="o">+</span>
-  ggtitle<span class="p">(</span>TeX<span class="p">(</span><span class="s">&quot;$e^+e^- \\rightarrow \\pi^+\\pi^- (\\gamma)$ statistical covariance&quot;</span><span class="p">))</span> <span class="o">+</span>
-  scale_fill_gradient<span class="p">(</span>low<span class="o">=</span><span class="s">&quot;white&quot;</span><span class="p">,</span> high<span class="o">=</span><span class="s">&quot;steelblue&quot;</span><span class="p">)</span> <span class="o">+</span>
-  <span class="kc">NULL</span>
+<span class="kp">print</span><span class="p">(</span>rc<span class="p">)</span>
+save_plot<span class="p">(</span>name<span class="p">,</span> title<span class="o">=</span>pdftitle<span class="p">,</span> width<span class="o">=</span>my.width<span class="p">,</span> height<span class="o">=</span>my.height<span class="p">)</span>
+<span class="kp">invisible</span><span class="p">(</span><span class="kc">NULL</span><span class="p">)</span>
 </pre></div>
 
     </div>
