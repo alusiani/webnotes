@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>Vus-from-tau-notes-jan19</title>
+<title>strong-2020-29apr19-rlang</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13116,25 +13116,43 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Notebook-for-$|V_{us}|$-with-tau-measurements">Notebook for $|V_{us}|$ with tau measurements<a class="anchor-link" href="#Notebook-for-$|V_{us}|$-with-tau-measurements">&#182;</a></h1><p>This notebook uses the Julia language to perform simple calculations and contains:</p>
+<h1 id="BaBar-$\sigma(e^+e^--\rightarrow-\pi^+\pi^--(\gamma))$">BaBar $\sigma(e^+e^- \rightarrow \pi^+\pi^- (\gamma))$<a class="anchor-link" href="#BaBar-$\sigma(e^+e^--\rightarrow-\pi^+\pi^--(\gamma))$">&#182;</a></h1><h2 id="29-Apr-2019">29 Apr 2019<a class="anchor-link" href="#29-Apr-2019">&#182;</a></h2><p>The latest BaBar measurements are published in two papers that point to exatly the same supplemental data</p>
 <ul>
-<li>notes on radiative corrections</li>
-<li>notes on form factors from lattice QCD</li>
+<li><p>B. Aubert et al. [BaBar Collaboration], <a href="https://doi.org/10.1103/PhysRevLett.103.231801">Phys. Rev. Lett. 103 (2009) 231801</a>, <a href="http://inspirehep.net/record/829441">inspirehep</a>,<br />
+"Precise measurement of the e+ e- ---&gt; pi+ pi- (gamma) cross section with the Initial State Radiation method at BABAR"</p>
+</li>
+<li><p>J. P. Lees et al. [BaBar Collaboration], <a href="https://doi.org/10.1103/PhysRevD.86.032013">Phys. Rev. D 86 (2012) 032013</a>, <a href="http://inspirehep.net/record/1114155">inspirehep</a>,<br />
+"Precise Measurement of the e+e−→π+π−(γ)e+e−→π+π−(γ) Cross Section with the Initial-State Radiation Method at BABAR"</p>
+<ul>
+<li><a href="http://ftp.aip.org/epaps/phys_rev_lett/E-PRLTAO-103-045950/">data</a></li>
 </ul>
+</li>
+</ul>
+<p>The data report the "<strong>bare cross section including FSR</strong>" and in detail:</p>
+<ul>
+<li>the cross-section and its total undertainty in variable-width bins of energy</li>
+<li>the per-mil relative systematic uncertainty (per energy bin, 100% correlated on all bins)</li>
+<li>the statistical correlation between any two bins of cross-section</li>
+</ul>
+<p>In the following the data are used to show a few plots.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[48]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="k">using</span> <span class="n">Printf</span>
-<span class="k">using</span> <span class="n">Measurements</span>
-
-<span class="c">## see also https://docs.julialang.org/en/v1.1/manual/types/#man-custom-pretty-printing-1</span>
-<span class="n">Base</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">io</span><span class="o">::</span><span class="kt">IO</span><span class="p">,</span> <span class="n">f</span><span class="o">::</span><span class="kt">Float64</span><span class="p">)</span> <span class="o">=</span> <span class="nd">@printf</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%.5f</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="kn">library</span><span class="p">(</span>repr<span class="p">,</span> quietly<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>ggplot2<span class="p">,</span> quietly<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>scales<span class="p">,</span> quietly<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>RColorBrewer<span class="p">,</span> quietly<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>latex2exp<span class="p">,</span> quietly<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>rminuit2<span class="p">,</span> quietly<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>Cairo<span class="p">,</span> quietly<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>svglite<span class="p">,</span> quietly<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>stringr<span class="p">,</span> quietly<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13142,620 +13160,269 @@ div#notebook {
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="$|V_{us}|$-using-$B(\tau\to-K\nu)/B(\tau\to\pi\nu)$">$|V_{us}|$ using $B(\tau\to K\nu)/B(\tau\to\pi\nu)$<a class="anchor-link" href="#$|V_{us}|$-using-$B(\tau\to-K\nu)/B(\tau\to\pi\nu)$">&#182;</a></h2>$$
-  \frac{B(\tau\to K\nu)}{B(\tau\to\pi\nu)} = 
-  \frac{f_K^2}{f_\pi^2}
-  \frac{|V_{us}|^2}{|V_{ud}|^2}
-  \frac{\left(1-\frac{m_K^2}{m_\tau^2} \right)^2}
-       {\left(1-\frac{m_\pi^2}{m_\tau^2}\right)^2}
-  \frac{(1+\delta R_{\tau^-\to K^-\nu_\tau})}{(1+\delta R_{\tau^-\to\pi^-\nu_\tau})}
-$$<p>In the ratio, the short-distance electroweak contributions cancel.
-The long-distance contributions ratio is estimated as follows:</p>
-$$
-  \frac{(1+\delta R_{\tau^-\to K^-\nu_\tau})}{(1+\delta R_{\tau^-\to\pi^-\nu_\tau})}
-  =
-  \frac{(1+\delta R_{\tau^-\to K^-\nu/K^-\to\mu^-\nu})}
-       {(1+\delta R_{\tau^-\to\pi^-\nu/\pi^-\to\mu^-\nu})}
-  \frac{(1+\delta R_{K^-\to\mu^-\nu})}
-       {(1+\delta R_{\pi^-\to\mu^-\nu})} 
-$$
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Alternative-notation">Alternative notation<a class="anchor-link" href="#Alternative-notation">&#182;</a></h3><p>Sw.Banerjee (BaBar collaboration), ICHEP08, Philadelphia, USA, July 2008, <a href="https://inspirehep.net/record/801963">Banerjee:2008hg</a>, uses a different notation:</p>
-$$
-  \frac{B(\tau\to K\nu)}{B(\tau\to\pi\nu)} = 
-  \frac{f_K^2}{f_\pi^2}
-  \frac{|V_{us}|^2}{|V_{ud}|^2}
-  \frac{\left(1-\frac{m_K^2}{m_\tau^2} \right)^2}
-       {\left(1-\frac{m_\pi^2}{m_\tau^2}\right)^2}
-  \frac{\delta_{\tau^-\to K^-\nu_\tau}}{\delta_{\tau^-\to\pi^-\nu_\tau}}
-$$$$
-  \frac{\delta_{\tau^-\to K^-\nu_\tau}}{\delta_{\tau^-\to\pi^-\nu_\tau}}
-  =
- \frac{\delta_{\tau^-\to K^-\nu/K^-\to\mu^-\nu}}
-      {\delta_{\tau^-\to\pi^-\nu/\pi^-\to\mu^-\nu}}
- \frac{\delta_{K^-\to\mu^-\nu}}{\delta_{\pi^-\to\mu^-\nu}} 
-$$
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="$\delta-R_{\tau^-\to\pi^-\nu/\pi^-\to\mu^-\nu}$,-$\delta-R_{\tau^-\to-K^-\nu/K^-\to\mu^-\nu}$">$\delta R_{\tau^-\to\pi^-\nu/\pi^-\to\mu^-\nu}$, $\delta R_{\tau^-\to K^-\nu/K^-\to\mu^-\nu}$<a class="anchor-link" href="#$\delta-R_{\tau^-\to\pi^-\nu/\pi^-\to\mu^-\nu}$,-$\delta-R_{\tau^-\to-K^-\nu/K^-\to\mu^-\nu}$">&#182;</a></h2><p>A. Pich, “Precision Tau Physics,” Prog. Part. Nucl. Phys. 75 (2014) 41, arXiv:1310.7922 [hep-ph].
-reports that<br>
-$\delta R_{\tau^-\to\pi^-\nu/\pi^-\to\mu^-\nu} = (0.16 \pm 0.14)\%$<br>
-and<br>
-$\delta R_{\tau^-\to K^-\nu/K^-\to\mu^-\nu} = (0.90\pm 0.22)\%$,<br>
-and states that they include both short- and long-distance corrections, and have been computed in the following references:</p>
-<ul>
-<li>W. J. Marciano and A. Sirlin, “Radiative corrections to πℓ2 decays,” Phys. Rev. Lett. 71 (1993) 3629. <a href="http://inspirehep.net/record/359732">Marciano:1993sh</a></li>
-<li>R. Decker and M. Finkemeier, “Radiative corrections to the decay τ → π (K) ντ,” Phys. Lett. B334 (1994) 199,
-<a href="http://inspirehep.net/record/383287">Decker:1994dd</a></li>
-<li>R. Decker and M. Finkemeier, “Short and long distance effects in the decay τ → π ντ(γ),” Nucl. Phys. B438 (1995) 17, <a href="https://arxiv.org/abs/hep-ph/9403385">arXiv:hep-ph/9403385</a>.</li>
-<li>R. Decker and M. Finkemeier, “Radiative corrections to the decay τ → π ντ,” Nucl. Phys. Proc. Suppl. 40 (1995) 453, <a href="https://arxiv.org/abs/hep-ph/9411316">arXiv:hep-ph/9411316</a>.</li>
-</ul>
-<p>M.&amp;S. did just a very partial calculation</p>
-<p>D.&amp;F. published two papers (1994, 1995) and one proceedings contribution (1995). The last publication (the proceedings contribution) reports uncertainties that are larger and more reliable than the former two papers by D.&amp;F.. These uncertainties are also symmetric, while the ones in the previous two papers were asymmetric. The numbers reported by Pich 2014 are coming from this last publication.</p>
-<p>D.&amp;F 1994: $\delta R_{\tau/\pi} = (0.16 _{-0.14} ^{+0.09})\%$, $\delta R_{\tau/K} = (0.90 _{-0.26} ^{+0.17})\%$
-<br>
-D.&amp;F 1995: $\delta R_{\tau/\pi} = (0.16 _{-0.14} ^{+0.09})\%$, $\delta R_{\tau/K} = (0.90 _{-0.22} ^{+0.04})\%$</p>
-<p>Ref. Antonelli 2013 <a href="http://inspirehep.net/record/1231484">Antonelli:2013usa</a> cites $1 + \delta R_{\tau^-\to K^-\nu/K^-\to\mu^-\nu} = R_{\text{EM}}^{\tau/K} = 1.0090(22)$ from Ref. [11].</p>
-<ul>
-<li>[11] Roger Decker and Markus Finkemeier. Radiative corrections to the decay
-τ → π(K)ντ . Phys.Lett., B316:403–406, 1993, doi:10.1016/0370-2693(93)90345-I,
-<a href="https://arxiv.org/abs/hep-ph/9307372">arXiv:hep-ph/9307372</a>.</li>
-</ul>
-<p>which appears to be a wrong reference, while the reported value is the same as in Pich 2014.</p>
-<p>Ref. Schael 05C cites for $\delta R_{\tau^-\to\pi^-\nu/\pi^-\to\mu^-\nu} =  1.0016 \pm 0.0014$ Ref. [53]</p>
-<ul>
-<li>[53] R. Decker, M. Finkemeier, Radiative Tau Decays with One Pseudoscalar Meson,
-Phys. Rev. D 48 (1993) 4203 <a href="https://arxiv.org/abs/hep-ph/9302286">arXiv:hep-ph/9302286</a></li>
-</ul>
-<p>which appears to be a wrong reference, while the value used is the same as in Pich 2014.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="$\delta-R_{K^-\to\mu^-\nu-/-\pi^-\to\mu^-\nu}$">$\delta R_{K^-\to\mu^-\nu / \pi^-\to\mu^-\nu}$<a class="anchor-link" href="#$\delta-R_{K^-\to\mu^-\nu-/-\pi^-\to\mu^-\nu}$">&#182;</a></h2><p>We now consider the other term, $\delta R_{K^-\to\mu^-\nu / \pi^-\to\mu^-\nu}$.</p>
-<p>A. Pich, “Precision Tau Physics,” Prog. Part. Nucl. Phys. 75 (2014) 41, arXiv:1310.7922 [hep-ph].
-reports: that<br>
-$\delta R_{K^-\to\mu^-\nu / \pi^-\to\mu^-\nu} = -(1.13 \pm 0.23)\% = -(0.69 \pm 0.17)\% -(0.44 \pm 0.15)\%$</p>
-<ul>
-<li>$\delta R_{K^-\to\mu^-\nu / \pi^-\to\mu^-\nu} = -(0.69 \pm 0.17)\%$ EM radiative correction [161,162]</li>
-<li>$\delta R^{\text{SU2break}}_{K^-\to\mu^-\nu / \pi^-\to\mu^-\nu} = -(0.44 \pm 0.15)\%$ strong isospin-breaking correction [161]</li>
-</ul>
-<p>The strong isospin-breaking correction must be applied when using $f_K/f_\pi$ computed with lattice QCD in the isospin-symmetric limit $m_u = m_d$ (Cirigliano &amp; Neufeld, 2011). Pich combines the two corrections in:</p>
-<ul>
-<li>$\delta R^\prime_{K^-\to\mu^-\nu / \pi^-\to\mu^-\nu} = -(1.13 \pm 0.23)\% = -(0.69 \pm 0.17)\% -(0.44 \pm 0.15)\%$</li>
-</ul>
-<p>Since FLAG 2016, the isosping breaking correction is done by FLAG for $f_{K^\pm}$ and $f_{\pi^\pm}$, and the second term is not required any more.</p>
-<p>The references are:</p>
-<ul>
-<li>[161] V. Cirigliano and H. Neufeld, “A note on isospin violation in Pl2(gamma) decays,” Phys. Lett. B700 (2011) 7. <a href="https://inspirehep.net/record/886649">Cirigliano:2011tm</a></li>
-<li><p>[162] W. J. Marciano, “Precise determination of |V(us)| from lattice calculations of pseudoscalar decay constants,” Phys. Rev. Lett. 93 (2004) 231803, arXiv:hep-ph/0402299.</p>
-</li>
-<li><p>Marciano 2004 computed the SU(2) correction for charged mesons to use the lattice isospin-limit f_K/f_pi, disregarding structure dependent effects</p>
-</li>
-<li>C.&amp;N. did structure dependent calculations, they use M.&amp;S. calculation in the limit of point-like mesons (universal)</li>
-</ul>
-<p>The <a href="http://pdg.lbl.gov/2018/reviews/rpp2018-rev-pseudoscalar-meson-decay-cons.pdf">RPP review on Leptonic Decays of Charged Pseudoscalar Mesons</a> reports</p>
-<p>$\delta R_{\pi^-\to\mu^-\nu} = 0.0176(21)$<br>
-$\delta R_{K^-\to\mu^-\nu} = 0.0107(21)$</p>
-<p>The references used are:</p>
-<ul>
-<li><ol>
-<li>V. Cirigliano and I. Rosell, JHEP 10, 005 (2007).</li>
-</ol>
-</li>
-<li><ol>
-<li>A. Sirlin, Nucl. Phys. B196, 83 (1982).</li>
-</ol>
-</li>
-<li><ol>
-<li>T. Kinoshita, Phys. Rev. Lett. 2, 477 (1959).</li>
-</ol>
-</li>
-<li><ol>
-<li>M. Knecht et al., Eur. Phys. J. C12, 469 (2000). <a href="https://arxiv.org/abs/hep-ph/9909284">https://arxiv.org/abs/hep-ph/9909284</a></li>
-</ol>
-</li>
-<li><ol>
-<li>B. Ananthanarayan and B. Moussallam, JHEP 06, 047 (2004).</li>
-</ol>
-</li>
-<li><ol>
-<li>S. Descotes-Genon and B. Moussallam, Eur. Phys. J. C42, 403 (2005)</li>
-</ol>
-</li>
-</ul>
-<p>The values correspond to $\delta R_{K^-\to\mu^-\nu / \pi^-\to\mu^-\nu} = \delta_{K/\pi} = 0.0069(17)$
-from Ref. 17. This corresponds to the value used by A.Pich without the isospin-breaking term, which is related to the lattice QCD form factors. Some uncertainties cancel in the ratio: "The error on the ratio of kaon-to-pion leptonic decay widths is under better theoretical control because the hadronic contributions from low-energy constants estimated within the large-Nc framework cancel at lowest order in the chiral expansion."</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Cirigliano-and-Neufeld-2011">Cirigliano and Neufeld 2011<a class="anchor-link" href="#Cirigliano-and-Neufeld-2011">&#182;</a></h2><p>V. Cirigliano and H. Neufeld, “A note on isospin violation in Pl2(gamma) decays,” Phys. Lett. B700 (2011) 7. <a href="https://inspirehep.net/record/886649">Cirigliano:2011tm</a></p>
-<p>Computes EM radiative correction for $\Gamma(K \to \mu \nu) / \Gamma(\pi \to \mu \nu)$</p>
-<p>$\delta^{\text{EM}}_{K \to \mu \nu} - \delta^{\text{EM}}_{\pi \to \mu \nu} = -0.0069(17)$</p>
-<p>and strong-isospin-breaking correction</p>
-<p>$\delta^{\text{IB}}_{K \to \mu \nu} - \delta^{\text{IB}}_{\pi \to \mu \nu} = -0.0043(12)$</p>
-<p>Cirigliano and Neufeld 2011 give the the formulas to compute separately the two contributions. PDG 2016 review of pseudoscalar meson decays does the calculations using up-to-date inputs and obtains</p>
-<p>$\delta^{\text{EM}}_{\pi \to \mu \nu} = 0.0176(21)$
-$\delta^{\text{EM}}_{K \to \mu \nu} = 0.0107(21)$<br></p>
-<p>(Jonathan L. Rosner, Sheldon Stone, Ruth S. Van de Water, Leptonic Decays of Charged Pseudoscalar Mesons - 2015, <a href="https://arxiv.org/abs/1509.02220">arXiv:1509.02220 [hep-ph]</a>)</p>
-<p>The paper</p>
-<p>M. Di Carlo, D. Giusti, V. Lubicz, G. Martinelli, C.T. Sachrajda, F. Sanfilippo, S. Simula, N. Tantalo<br>
-Light-meson leptonic decay rates in lattice QCD+QED<br>
-arXiv:1904.08731 [hep-lat], <a href="https://inspirehep.net/record/1730333">DiCarlo:2019thl</a></p>
-<p>cites Cirigliano and Neufeld 2011 and PDG 2016 and reports:</p>
-<p>$\delta R^{\text{phys}}_{\pi\mu\nu} = 0.0176(21)$<br>
-$\delta R^{\text{phys}}_{K\mu\nu} = 0.0064(24)$</p>
-<p>Only $\delta R^{\text{phys}}_{K\mu\nu}$ gets the strong-isospin-breaking correction because only $f_K$ needs a correction between the isospin-limit and the physical $f_{K^\pm}$ value.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Di-Carlo-2019">Di Carlo 2019<a class="anchor-link" href="#Di-Carlo-2019">&#182;</a></h2><p>M. Di Carlo, D. Giusti, V. Lubicz, G. Martinelli, C.T. Sachrajda, F. Sanfilippo, S. Simula, N. Tantalo<br>
-Light-meson leptonic decay rates in lattice QCD+QED<br>
-arXiv:1904.08731 [hep-lat], <a href="https://inspirehep.net/record/1730333">DiCarlo:2019thl</a></p>
-<p>EM radiative corrections inclusive of strong-isospin-breaking term to be used with the strong-isospin-symmetric lattice QCD $f_K$ (and $f_\pi$):</p>
-<ul>
-<li>$\delta R_{K^-\to\mu^-\nu} = 0.24(10) \%$</li>
-<li>$\delta R_{\pi^-\to\mu^-\nu} = 1.53(19) \%$</li>
-<li>$\delta R_{K^-\to\mu^-\nu} - \delta R_{\pi^-\to\mu^-\nu} = -1.26(14) \%$</li>
-</ul>
-<p>Our results in Eqs. (101) - (102) can be compared with the ChPT predictions δRphysπ = 0.0176(21) and δRphysK = 0.0064(24) obtained in Ref. [26] and adopted by the PDG [20, 25].</p>
-<p>[26] V. Cirigliano and H. Neufeld, Phys. Lett. B 700 (2011) 7 [arXiv:1102.0563 [hep-ph]].</p>
-<p>Taking the experimental values Γ(π− → µ−ν¯µ[γ]) = 3.8408(7)·107s−1 and Γ(K− → µ −ν¯µ[γ]) = 5.134(11) · 107s−1 from the PDG [20] and using our results (101) - (102), we obtain
-f(0)π|Vud| = 127.28 (2)exp (12)th MeV = 127.28 (12) MeV ,
-f(0)K |Vus| = 35.23 (4)exp (2)th MeV = 35.23 (5) MeV ,</p>
-<p>Taking the experimental value of the rate for the Kµ2 decay, Eq. (3) together with Γ(0)(K± → µ± ν) obtained using the lattice determination of the kaon decay constant we obtain |Vus| = 0.22567(42), in agreement with the latest estimate |Vus| = 0.2253(7), recently updated by the PDG [20] but with better precision.</p>
-<p>Alternatively, by taking the ratio of Kµ2 and πµ2 decay rates and the updated value |Vud| = 0.97420(21) from
-super-allowed nuclear beta decays [21], we obtain |Vus| = 0.22538(38).</p>
-<p>The unitarity of the first row of the CKM matrix is satisfied at the per-mille level; e.g. taking the value of Vus from the ratio of decay rates and |Vub| = 0.00413(49) [20], we obtain |Vud|^2 + |Vus|^2 + |Vub|^2 = 0.99988(44).</p>
-<p>Before closing this section, we comment briefly about the comparison between our result δRphysK = 0.0024(10) and the corresponding model-dependent ChPT prediction δRphysK = 0.0064(24) from Ref. [26]. The latter is obtained by adding a model-dependent QED correction of 0.0107(21) and a model-independent NLO strong IB contribution equal to −0.0043(12). Our result on the other hand, obtained in the GRS prescription, stems from a QED correction equal to 0.0088(9) and a strong IB term equal to −0.0064(7) (see also Ref. [45]). The difference between our result and
-the ChPT prediction of Ref. [26] appears to be mainly due to a different strong IB contribution. Thus, in the present Nf = 2 + 1 + 1 study, we confirm for the strong IB term a discrepancy at the level of about 2 standard deviations, which was already observed at Nf = 2 in Ref. [4].</p>
-<p>[4] G. M. de Divitiis et al., Phys. Rev. D 87 (2013) no.11, 114505 <a href="https://arxiv.org/abs/1303.4896">arXiv:1303.4896 [hep-lat]</a>.</p>
-
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[74]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
-<span class="c">## reproduce Di Carlo 2019 result for Vus</span>
-<span class="c">##</span>
-<span class="c">## - use PDG 2019 constants</span>
-<span class="c">## - reproduction is not perfect,</span>
-<span class="c">##   Di Carlo 2019 Vus = 0.22538 (24)exp (30)th = 0.22538 (38)</span>
-<span class="c">##</span>
-<span class="n">dRrad_kmu_phys</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.24</span> <span class="n">±</span> <span class="mf">0.10</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="c"># 0.24(10)</span>
-<span class="n">dRrad_pimu_phys</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.53</span> <span class="n">±</span> <span class="mf">0.19</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="c"># 1.53(19)</span>
-<span class="n">dRrad_kmu_by_pimu_phys</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.26</span> <span class="n">±</span> <span class="mf">0.14</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="c"># = −0.0126(14)</span>
-<span class="n">Vud</span> <span class="o">=</span> <span class="mf">0.97420</span> <span class="n">±</span> <span class="mf">0.00021</span>
-<span class="n">gamma_pimu2</span> <span class="o">=</span> <span class="p">(</span><span class="mf">3.8408</span> <span class="n">±</span> <span class="mf">0.0007</span><span class="p">)</span><span class="o">*</span><span class="mf">1e7</span>
-<span class="n">gamma_Kmu2</span> <span class="o">=</span> <span class="p">(</span><span class="mf">5.134</span> <span class="n">±</span> <span class="mf">0.011</span><span class="p">)</span><span class="o">*</span><span class="mf">1e7</span>
-<span class="c"># quant$quant.add.single(&quot;m_mu&quot;, 105.6583745, 0.0000024) ## changed18</span>
-<span class="c"># quant$quant.add.single(&quot;tau_mu&quot;, 2.1969811e-6, 0.000022e-6) ## changed14</span>
-<span class="c"># quant$quant.add.single(&quot;m_pi&quot;, 139.57061, 0.00024) ## changed18</span>
-<span class="c"># quant$quant.add.single(&quot;tau_pi&quot;, 2.6033e-8, 0.0005e-8)</span>
-<span class="c"># quant$quant.add.single(&quot;m_K&quot;, 493.677, 0.016)</span>
-<span class="c"># quant$quant.add.single(&quot;tau_K&quot;, 1.2380e-8, 0.0020e-8)</span>
-<span class="n">m_mu</span> <span class="o">=</span> <span class="mf">105.6583745</span> <span class="n">±</span> <span class="mf">0.0000024</span>
-<span class="n">m_pi</span> <span class="o">=</span> <span class="mf">139.57061</span> <span class="n">±</span> <span class="mf">0.00024</span>
-<span class="n">m_K</span> <span class="o">=</span> <span class="mf">493.677</span> <span class="n">±</span> <span class="mf">0.016</span>
-<span class="n">fK_by_fpi</span> <span class="o">=</span> <span class="mf">1.1966</span> <span class="n">±</span> <span class="mf">0.0013</span>
+<div class=" highlight hl-r"><pre><span></span><span class="c1">##</span>
+<span class="c1">## open graphic device</span>
+<span class="c1">##</span>
 
-<span class="n">Base</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">io</span><span class="o">::</span><span class="kt">IO</span><span class="p">,</span> <span class="n">f</span><span class="o">::</span><span class="kt">Float64</span><span class="p">)</span> <span class="o">=</span> <span class="nd">@printf</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%.5f</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+my.width <span class="o">=</span> <span class="m">9</span>
+my.height <span class="o">=</span> <span class="m">5</span>
+my.width.pixels <span class="o">=</span> <span class="m">560</span>
 
-<span class="n">Vus_by_Vud</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span>
-  <span class="p">(</span><span class="n">gamma_Kmu2</span><span class="o">/</span><span class="n">gamma_pimu2</span><span class="p">)</span> <span class="o">*</span> <span class="p">((</span><span class="n">m_pi</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">m_mu</span><span class="o">^</span><span class="mi">2</span><span class="o">/</span><span class="n">m_pi</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">m_K</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">m_mu</span><span class="o">^</span><span class="mi">2</span><span class="o">/</span><span class="n">m_K</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="p">))</span>
-  <span class="o">/</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">dRrad_kmu_by_pimu_phys</span><span class="p">)</span>
-  <span class="p">)</span> <span class="o">/</span> <span class="n">fK_by_fpi</span>
-
-<span class="n">Vus</span> <span class="o">=</span> <span class="n">Vus_by_Vud</span> <span class="o">*</span> <span class="n">Vud</span>
+rc <span class="o">=</span> <span class="kp">try</span><span class="p">(</span>dev.off<span class="p">(),</span> silent<span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="c1">## rc = dev.new(width=my.width, height=my.height, dpi = my.width.pixels / my.width)</span>
+rc <span class="o">=</span> dev.new<span class="p">(</span>width<span class="o">=</span>my.width<span class="p">,</span> height<span class="o">=</span>my.height<span class="p">,</span> dpi <span class="o">=</span> my.width.pixels <span class="o">/</span> my.width<span class="p">)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[74]:</div>
-
-
-
-
-<div class="output_latex output_subarea output_execute_result">
-$0.22535 \pm 0.00038$
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Banerjee-ICHEP-2008">Banerjee ICHEP 2008<a class="anchor-link" href="#Banerjee-ICHEP-2008">&#182;</a></h2><p>Ref. Banerjee ICHEP 2008 reports using Ref. [16] the same values as Pich 2014 for
-$\delta R_{\tau^-\to\pi^-\nu/\pi^-\to\mu^-\nu} = (0.16 \pm 0.14)\%$<br>
-and<br>
-$\delta R_{\tau^-\to K^-\nu/K^-\to\mu^-\nu} = (0.90\pm 0.22)\%$.</p>
-<ul>
-<li>[16]
-W. J. Marciano and A. Sirlin, Phys. Rev. Lett. 71, 3629 (1993); <a href="http://inspirehep.net/record/359732">Marciano:1993sh</a><br>
-R. Decker and M. Finkemeier, Nucl. Phys. B 438, 17 (1995); <a href="https://arxiv.org/abs/hep-ph/9403385">arXiv:hep-ph/9403385</a><br>
-R. Decker and M. Finkemeier, Phys. Lett. B 334 (1994) 199. <a href="http://inspirehep.net/record/383287">Decker:1994dd</a></li>
-</ul>
-<p>Marciano 1993, Decker &amp; Finkemeier 1994, 1995 are the same as in Pich 2014. The proceedings contribution with the actual reported values is missing.</p>
-<p>Banerjee ICHEP 2008 reports citing Ref. [22]<br>
-$\displaystyle \frac{1 + \delta R_{K^-\to\mu^-\nu}}{1 + \delta R_{\pi^-\to\mu^-\nu}} = 0.9930 \pm 0.0035$
-This corresponds to $\delta R_{K^-\to\mu^-\nu/\pi^-\to\mu^-\nu} = (-0.70 \pm 0.35)\%$, similar −(0.69 ± 0.17)% reported by Pich 2014, but with worse precision. Since the strong-isospin-symmetric $f_K/f_\pi$ lattice QCD determination is used to compute $V_{us}/V_{ud}$, the strong-isospin breaking corrections should have been used, as later pointed by Cirigliano &amp; Neufeld 2011.</p>
-<ul>
-<li>[22] W. J. Marciano, Phys. Rev. Lett. 93, 231803 (2004). <a href="http://inspirehep.net/record/645325">Marciano:2004uf</a></li>
-</ul>
-<p>Marciano 2004 uses $\delta R_{\pi^-\to\mu^-\nu} = \alpha/\pi \cdot C_\pi$,
-$\delta R_{K^-\to\mu^-\nu} = \alpha/\pi \cdot C_K$ and writes "an estimate of
-those structure dependent corrections by Finkemeier [15] leads to an overall difference
-$C_\pi - C_K = 3.0 \pm 1.5$".</p>
-<p>Marciano 2004 Ref. [15] is:</p>
-<ul>
-<li>M. Finkemeier, Phys. Lett. B387, 391 (1996); <a href="http://inspirehep.net/record/395635">Finkemeier:1995gi</a></li>
-<li>M. Finkemeier, Radiative Corrections to K_l2 decays (contribution to Daphne Physics Handbook), <a href="https://arxiv.org/abs/hep-ph/9412267">arXiv:hep-ph/9412267</a></li>
-<li>R. Decker and M. Finkemeier, Phys. Lett. B334, 199 (1994). <a href="http://inspirehep.net/record/383287">Decker:1994dd</a></li>
-</ul>
-<p>The first two papers focus on $\Gamma(h \to e \nu) / \Gamma(h \to \mu\nu)$ with $h = \pi, K$. The third one has been cited also by Pich 2014.</p>
-<p>Banerjee ICHEP 2008 finally reports
-$$</p>
-<h1 id="--\frac{(1+\delta-R{\tau^-\to-K^-\nu\tau})}{(1+\delta-R{\tau^-\to\pi^-\nu\tau})}">  \frac{(1+\delta R<em>{\tau^-\to K^-\nu</em>\tau})}{(1+\delta R<em>{\tau^-\to\pi^-\nu</em>\tau})}<a class="anchor-link" href="#--\frac{(1+\delta-R{\tau^-\to-K^-\nu\tau})}{(1+\delta-R{\tau^-\to\pi^-\nu\tau})}">&#182;</a></h1><p>\frac{(1+\delta R<em>{\tau^-\to K^-\nu/K^-\to\mu^-\nu})}
-       {(1+\delta R</em>{\tau^-\to\pi^-\nu/\pi^-\to\mu^-\nu})}
-  \frac{(1+\delta R<em>{K^-\to\mu^-\nu})}
-       {(1+\delta R</em>{\pi^-\to\mu^-\nu})}
-  = 1.0003 \pm 0.0044
-$$
-That is consistent with the paper numbers.</p>
-<p>Banerjee ICHEP 2008 reports $f_K/f_\pi = 1.189 \pm 0.007$ [21]</p>
-<ul>
-<li>[21] E. Follana, C. T. H. Davies, G. P. Lepage and J. Shigemitsu [HPQCD Collaboration and UKQCD Collaboration], Phys. Rev. Lett. 100, 062002 (2008).</li>
-</ul>
-<p>This value is in the strong-isospin-symmetry limit.</p>
-
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[49]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
-<span class="c">## reproduce Banerjee 2008 numbers</span>
-<span class="c">##</span>
-
-<span class="n">println</span><span class="p">(</span><span class="s">&quot;Banerjee 2008&quot;</span><span class="p">)</span>
-
-<span class="n">dRrad_taupi_by_pimu</span> <span class="o">=</span> <span class="mf">0.0016</span> <span class="n">±</span> <span class="mf">0.0014</span>
-<span class="n">dRrad_tauK_by_Kmu</span> <span class="o">=</span> <span class="mf">0.0090</span> <span class="n">±</span> <span class="mf">0.0022</span>
-<span class="n">Rrad_kmu_by_pimu</span> <span class="o">=</span> <span class="mf">0.9930</span> <span class="n">±</span> <span class="mf">0.0035</span>
-
-<span class="n">dRrad_kmu_by_pimu</span> <span class="o">=</span> <span class="n">Rrad_kmu_by_pimu</span> <span class="o">-</span><span class="mi">1</span>
-
-<span class="n">Base</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">io</span><span class="o">::</span><span class="kt">IO</span><span class="p">,</span> <span class="n">f</span><span class="o">::</span><span class="kt">Float64</span><span class="p">)</span> <span class="o">=</span> <span class="nd">@printf</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%.2f</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-<span class="n">println</span><span class="p">(</span><span class="s">&quot;dRrad_kmu_by_pimu(%) = &quot;</span><span class="p">,</span> <span class="n">round</span><span class="p">(</span><span class="n">dRrad_kmu_by_pimu</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">digits</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="s">&quot;, vs. Pich 2014 -0.69 ± 0.17&quot;</span><span class="p">)</span>
-
-<span class="n">Rrad_tauK_by_taupi</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">dRrad_tauK_by_Kmu</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">dRrad_taupi_by_pimu</span><span class="p">)</span> <span class="o">*</span> <span class="n">Rrad_kmu_by_pimu</span>
-<span class="n">dRrad_tauK_by_taupi</span> <span class="o">=</span> <span class="n">Rrad_tauK_by_taupi</span> <span class="o">-</span> <span class="mi">1</span>
-
-<span class="n">println</span><span class="p">(</span><span class="s">&quot;dRrad_tauK_by_taupi(%) = &quot;</span><span class="p">,</span> <span class="n">round</span><span class="p">(</span><span class="n">dRrad_tauK_by_taupi</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">digits</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
-
-<span class="n">Base</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">io</span><span class="o">::</span><span class="kt">IO</span><span class="p">,</span> <span class="n">f</span><span class="o">::</span><span class="kt">Float64</span><span class="p">)</span> <span class="o">=</span> <span class="nd">@printf</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%.4f</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-<span class="n">println</span><span class="p">(</span><span class="s">&quot;Rrad_tauK_by_taupi = &quot;</span><span class="p">,</span> <span class="n">round</span><span class="p">(</span><span class="n">Rrad_tauK_by_taupi</span><span class="p">,</span> <span class="n">digits</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+<div class=" highlight hl-r"><pre><span></span><span class="c1">##</span>
+<span class="c1">## jupyter options</span>
+<span class="c1">##</span>
+<span class="kp">options</span><span class="p">(</span>repr.plot.width<span class="o">=</span>my.width<span class="p">,</span> repr.plot.height <span class="o">=</span> my.height<span class="p">,</span> repr.plot.res <span class="o">=</span> <span class="m">100</span><span class="p">)</span>
+<span class="kp">options</span><span class="p">(</span>jupyter.plot_mimetypes <span class="o">=</span> <span class="s">&quot;image/svg+xml&quot;</span><span class="p">)</span>
+<span class="c1">## options(jupyter.plot_mimetypes = &quot;image/png&quot;)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Banerjee 2008
-dRrad_kmu_by_pimu(%) = -0.70 ± 0.35, vs. Pich 2014 -0.69 ± 0.17
-dRrad_tauK_by_taupi(%) = 0.03 ± 0.44
-Rrad_tauK_by_taupi = 1.0003 ± 0.0044
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[50]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
-<span class="c">## compute total correction for Vus from tau-&gt;K / tau-&gt;pi</span>
-<span class="c">## - Pich 2014 without strong-isospin-breaking term</span>
-<span class="c">## - Pich 2014 with strong-isospin-breaking term</span>
-<span class="c">##</span>
-<span class="c">## quant$quant.add.single(&quot;dRrad_taupi_by_pimu&quot;, 0.16e-2, 0.14e-2)</span>
-<span class="c">## quant$quant.add.single(&quot;dRrad_tauK_by_Kmu&quot;, 0.90e-2, 0.22e-2)</span>
-<span class="c">##</span>
-<span class="n">dRrad_taupi_by_pimu</span> <span class="o">=</span> <span class="mf">0.0016</span> <span class="n">±</span> <span class="mf">0.0014</span>
-<span class="n">dRrad_tauK_by_Kmu</span> <span class="o">=</span> <span class="mf">0.0090</span> <span class="n">±</span> <span class="mf">0.0022</span>
-<span class="n">dRrad_kmu_by_pimu</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.0069</span> <span class="n">±</span> <span class="mf">0.0017</span><span class="p">)</span>
-<span class="n">dRrad_kmu_by_pimu_SU2break</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="mf">0.44</span> <span class="n">±</span> <span class="mf">0.15</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span>
+<div class=" highlight hl-r"><pre><span></span><span class="c1">##</span>
+<span class="c1">## plot functions</span>
+<span class="c1">## see http://t-redactyl.io/blog/2016/03/creating-plots-in-r-using-ggplot2-part-9-function-plots.html</span>
+<span class="c1">##</span>
 
-<span class="n">dRrad_tauK_by_taupi</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">dRrad_tauK_by_Kmu</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">dRrad_taupi_by_pimu</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">dRrad_kmu_by_pimu</span><span class="p">)</span> <span class="o">-</span><span class="mi">1</span>
-<span class="n">dRrad_tauK_by_taupi_SU2break</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">+</span>
-  <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">dRrad_tauK_by_Kmu</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">dRrad_taupi_by_pimu</span><span class="p">)</span> <span class="o">*</span>
-  <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">dRrad_kmu_by_pimu</span> <span class="o">+</span> <span class="n">dRrad_kmu_by_pimu_SU2break</span><span class="p">)</span>
-<span class="n">Base</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">io</span><span class="o">::</span><span class="kt">IO</span><span class="p">,</span> <span class="n">f</span><span class="o">::</span><span class="kt">Float64</span><span class="p">)</span> <span class="o">=</span> <span class="nd">@printf</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%.2f</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-<span class="n">println</span><span class="p">(</span><span class="s">&quot;dRrad_tauK_by_taupi(%) = &quot;</span><span class="p">,</span> <span class="n">round</span><span class="p">(</span><span class="n">dRrad_tauK_by_taupi</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">digits</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
-<span class="n">println</span><span class="p">(</span><span class="s">&quot;dRrad_tauK_by_taupi_SU2break(%) = &quot;</span><span class="p">,</span> <span class="n">round</span><span class="p">(</span><span class="n">dRrad_tauK_by_taupi_SU2break</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="n">digits</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="c1">##--- configure ggplot2 theme</span>
+theme_set<span class="p">(</span>theme_bw<span class="p">(</span>base_size <span class="o">=</span> <span class="m">15</span><span class="p">,</span> base_family <span class="o">=</span> <span class="s">&quot;Helvetica&quot;</span><span class="p">))</span>
+theme_update<span class="p">(</span>
+  <span class="c1">## plot.title = element_text(face=&quot;bold&quot;, vjust=1),</span>
+  panel.background <span class="o">=</span> element_rect<span class="p">(</span>fill <span class="o">=</span> <span class="s">&quot;transparent&quot;</span><span class="p">,</span>colour <span class="o">=</span> <span class="kc">NA</span><span class="p">),</span>
+  plot.background <span class="o">=</span> element_rect<span class="p">(</span>fill <span class="o">=</span> <span class="s">&quot;transparent&quot;</span><span class="p">,</span>colour <span class="o">=</span> <span class="kc">NA</span><span class="p">),</span>
+  <span class="kc">NULL</span>
+<span class="p">)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>dRrad_tauK_by_taupi(%) = 0.04 ± 0.31
-dRrad_tauK_by_taupi_SU2break(%) = -0.40 ± 0.34
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="FLAG-2019-averages-for-fK&#177;/f&#960;&#177;,-f&#960;&#177;,-fK&#177;">FLAG 2019 averages for fK&#177;/f&#960;&#177;, f&#960;&#177;, fK&#177;<a class="anchor-link" href="#FLAG-2019-averages-for-fK&#177;/f&#960;&#177;,-f&#960;&#177;,-fK&#177;">&#182;</a></h2><p>FLAG Review 2019,
-Flavour Lattice Averaging Group (S. Aoki (Kyoto U., Yukawa Inst., Kyoto) et al.,
-arXiv:1902.08191 [hep-lat],
-<a href="http://inspirehep.net/record/1721393">Aoki:2019cca</a></p>
-<h3 id="Nf-=-2-+-1-+-1:-fK&#177;/f&#960;&#177;-=-1.1932(19)-Refs.-[5,-34,-35]-Nf-=-2-+-1-+-1">Nf = 2 + 1 + 1: fK&#177;/f&#960;&#177; = 1.1932(19) Refs. [5, 34, 35] Nf = 2 + 1 + 1<a class="anchor-link" href="#Nf-=-2-+-1-+-1:-fK&#177;/f&#960;&#177;-=-1.1932(19)-Refs.-[5,-34,-35]-Nf-=-2-+-1-+-1">&#182;</a></h3><p>\cite{Dowdall:2013rya,Carrasco:2014poa,Bazavov:2017lyh}</p>
-<ul>
-<li>[5] [FNAL/MILC 17] A. Bazavov et al., B- and D-meson leptonic decay constants from four-flavor lattice QCD, Phys. Rev. D98 (2018) 074512, [1712.09262], <a href="https://inspirehep.net/record/1644910">Bazavov:2017lyh</a>.</li>
-<li>[34] [HPQCD 13A] R. Dowdall, C. Davies, G. Lepage and C. McNeile, Vus from π and K
-decay constants in full lattice QCD with physical u, d, s and c quarks,
-Phys.Rev. D88 (2013) 074504, [1303.1670], <a href="https://inspirehep.net/record/1222849">Dowdall:2013rya</a>.</li>
-<li>[35] [ETM 14E] N. Carrasco, P. Dimopoulos, R. Frezzotti, P. Lami, V. Lubicz et al.,
-Leptonic decay constants fK, fD and fDs with Nf = 2 + 1 + 1 twisted-mass lattice
-QCD, Phys.Rev. D91 (2015) 054507, [1411.7908], <a href="https://inspirehep.net/record/1331423">Carrasco:2014poa</a>.</li>
-</ul>
-<h3 id="Nf-=-2-+-1:-----f&#960;&#177;-=-130.2-(0.8)-MeV-Refs.-[10,-36,-37]">Nf = 2 + 1:     f&#960;&#177; = 130.2 (0.8) MeV Refs. [10, 36, 37]<a class="anchor-link" href="#Nf-=-2-+-1:-----f&#960;&#177;-=-130.2-(0.8)-MeV-Refs.-[10,-36,-37]">&#182;</a></h3><p>\cite{Follana:2007uv,Bazavov:2010hj,Blum:2014tka}</p>
-<ul>
-<li>[10] [RBC/UKQCD 14B] T. Blum et al., Domain wall QCD with physical quark masses,
-Phys. Rev. D93 (2016) 074505, [1411.7017], <a href="https://inspirehep.net/record/1329971">Blum:2014tka</a>.</li>
-<li>[36] [HPQCD/UKQCD 07] E. Follana, C. T. H. Davies, G. P. Lepage and J. Shigemitsu,
-High precision determination of the π, K, D and Ds decay constants from lattice
-QCD, Phys. Rev. Lett. 100 (2008) 062002, [0706.1726], <a href="https://inspirehep.net/record/752941">Follana:2007uv</a>.</li>
-<li>[37] [MILC 10] A. Bazavov et al., Results for light pseudoscalar mesons, PoS LAT2010
-(2010) 074, [1012.0868], <a href="https://inspirehep.net/record/879625">Bazavov:2010hj</a>.</li>
-</ul>
-<h3 id="Nf-=-2-+-1-+-1:-fK&#177;-=-155.7-(0.3)-MeV-Refs.-[18,-34,-35]">Nf = 2 + 1 + 1: fK&#177; = 155.7 (0.3) MeV Refs. [18, 34, 35]<a class="anchor-link" href="#Nf-=-2-+-1-+-1:-fK&#177;-=-155.7-(0.3)-MeV-Refs.-[18,-34,-35]">&#182;</a></h3><p>\cite{Dowdall:2013rya,Bazavov:2014wgs,Carrasco:2014poa}</p>
-<ul>
-<li>[18] [FNAL/MILC 14A] A. Bazavov et al., Charmed and light pseudoscalar meson decay constants from four-flavor lattice QCD with physical light quarks, Phys.Rev. D90 (2014) 074509, [1407.3772], <a href="https://inspirehep.net/record/1306303">Bazavov:2014wgs</a>.</li>
-<li>[34] [HPQCD 13A] R. Dowdall, C. Davies, G. Lepage and C. McNeile, Vus from π and K decay constants in full lattice QCD with physical u, d, s and c quarks, Phys.Rev. D88 (2013) 074504, [1303.1670], <a href="https://inspirehep.net/record/1222849">Dowdall:2013rya</a>.</li>
-<li>[35] [ETM 14E] N. Carrasco, P. Dimopoulos, R. Frezzotti, P. Lami, V. Lubicz et al., Leptonic decay constants fK , fD and fDs with Nf = 2 + 1 + 1 twisted-mass lattice QCD, Phys.Rev. D91 (2015) 054507, [1411.7908], <a href="https://inspirehep.net/record/1331423">Carrasco:2014poa</a>.</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="FLAG-averages-before-FLAG-2019-for-fK&#177;/f&#960;&#177;,-f&#960;&#177;,-fK&#177;">FLAG averages before FLAG 2019 for fK&#177;/f&#960;&#177;, f&#960;&#177;, fK&#177;<a class="anchor-link" href="#FLAG-averages-before-FLAG-2019-for-fK&#177;/f&#960;&#177;,-f&#960;&#177;,-fK&#177;">&#182;</a></h2><p>HFLAV 2018 report says:</p>
-<p>We use fK±/fπ± = 1.193 ± 0.003 from the FLAG 2017 lattice QCD averages with Nf=2+1+1 [89],</p>
-<p>$\displaystyle\frac{f_{K\pm}}{f_{\pi\pm}} = 1.193(3)$ is taken from <a href="http://flag.unibe.ch/Media?action=AttachFile&amp;do=get&amp;target=FLAG_webupdate.pdf">FLAG 2017</a>, $N_f = 2 + 1 + 1$, Refs. [14, 26, 27]:</p>
-<p>We use fK± = 155.7 ± 0.3 MeV from FLAG 2017 with Nf=2+1+1 [89]</p>
-<p>FLAG 2017 updates FLAG 2016</p>
-<ul>
-<li>[89] FLAG working group, S. Aoki et al., “Review of lattice results concerning low-energy particle physics,” Eur. Phys. J. C77 (2017) 112, arXiv:1607.00299 [hep-lat]. see also <a href="http://flag.unibe.ch/">http://flag.unibe.ch/</a>.</li>
-</ul>
-<p>However, for fK±/fπ± FLAG 2017 is the same as FLAG 2016.</p>
-<p>FLAG 2017 says:</p>
-<p>$\displaystyle\frac{f_{K\pm}}{f_{\pi\pm}} = 1.193(3)$, $N_f = 2 + 1 + 1$, Refs. [14, 26, 27]</p>
-<ul>
-<li>[14] [FNAL/MILC 14A] A. Bazavov et al., Charmed and light pseudoscalar meson decay
-constants from four-flavor lattice QCD with physical light quarks,
-Phys.Rev. D90 (2014) 074509, [1407.3772], <a href="https://inspirehep.net/record/1306303">Bazavov:2014wgs</a>.</li>
-<li>[26] [HPQCD 13A] R. Dowdall, C. Davies, G. Lepage and C. McNeile, Vus from π and K
-decay constants in full lattice QCD with physical u, d, s and c quarks,
-Phys.Rev. D88 (2013) 074504, [1303.1670], <a href="https://inspirehep.net/record/1222849">Dowdall:2013rya</a>.</li>
-<li>[27] [ETM 14E] N. Carrasco, P. Dimopoulos, R. Frezzotti, P. Lami, V. Lubicz et al.,
-Leptonic decay constants fK, fD and fDs with Nf = 2 + 1 + 1 twisted-mass lattice
-QCD, Phys.Rev. D91 (2015) 054507, [1411.7908], <a href="https://inspirehep.net/record/1331423">Carrasco:2014poa</a>.</li>
-</ul>
-<p>FLAG 2017 reports also:</p>
-<ul>
-<li>Nf = 2 + 1 : fπ± = 130.2 (0.8) MeV Refs. [10, 28, 29], (68)</li>
-<li>Nf = 2 + 1 + 1 : fK± = 155.7 (0.3) MeV Refs. [14, 26, 27],</li>
-</ul>
-<ul>
-<li>[10] [RBC/UKQCD 14B] T. Blum et al., Domain wall QCD with physical quark masses,
-Phys. Rev. D93 (2016) 074505, [1411.7017], <a href="https://inspirehep.net/record/1329971">Blum:2014tka</a>.</li>
-<li>[28] [HPQCD/UKQCD 07] E. Follana, C. T. H. Davies, G. P. Lepage and J. Shigemitsu,
-High precision determination of the π, K, D and Ds decay constants from lattice
-QCD, Phys. Rev. Lett. 100 (2008) 062002, [0706.1726], <a href="https://inspirehep.net/record/752941">Follana:2007uv</a>.</li>
-<li>[29] [MILC 10] A. Bazavov et al., Results for light pseudoscalar mesons, PoS LAT2010
-(2010) 074, [1012.0868], <a href="https://inspirehep.net/record/879625">Bazavov:2010hj</a>.</li>
-</ul>
-<p>FLAG 2016 has different numbers:</p>
-<ul>
-<li>Nf = 2 + 1 : fπ± = 130.2 (1.4) MeV Refs. [74, 76, 87], (68)</li>
-<li>Nf = 2 + 1 + 1 : fK± = 155.6 (0.4) MeV Refs. [66, 67, 69],</li>
-</ul>
-<p>The <a href="http://pdg.lbl.gov/2018/reviews/rpp2018-rev-pseudoscalar-meson-decay-cons.pdf">RPP review on Leptonic Decays of Charged Pseudoscalar Mesons</a> reports:</p>
-<p>Our final preferred theoretical values for the charged pion and kaon decay constants
-are Our averages :</p>
-<ul>
-<li>fπ+ = 130.2(1.7) MeV ,</li>
-<li>fK+ = 155.6(0.4) MeV ,</li>
-<li>fK+ / fπ+ = 1.1928(26), (84.16)</li>
-</ul>
-<p>where fπ+ is simply the (2+1)-flavor FLAG average with the error increased by the
-estimated 0.7% charm sea-quark contribution. For fK+ and fK+/fπ+, we take a simple
-weighted average of the (2+1)- and (2+1+1)-flavor FLAG values, because they are each
-obtained from a sufficient number of independent calculations that we do not expect
-there to be significant correlations. In practice, the addition of the charm sea-quark error
-has a tiny impact on our final values in Eq. (84.16), increasing the uncertainty on fπ+ by
-0.3 MeV, and the central value for fK+/fπ+ by one in the last digit.</p>
-<p>The RPP uses the following experimental inputs:</p>
-<blockquote><p>...the 2015 preliminary three- and four-flavor averages for the pion
-and kaon decay constants and their ratio from the Flavour Lattice Averaging Group
-(FLAG) [12,13] in the lines labeled “FLAG 15 average.” These preliminary updates of the
-2013 FLAG averages [14] include only those results from Table 84.1 that are published in
-refereed journals, or that are straightforward conference updates of published analyses.</p>
-</blockquote>
-<ul>
-<li><ol>
-<li>A. J¨uttner, “Light Flavour Physics” plenary talk presented at Lattice 2015,
-<a href="http://inspirehep.net/record/14768">Juettner:2016atf</a>.  </li>
-</ol>
-</li>
-<li><ol>
-<li>P. A. Boyle, T. Kaneko, and S. Simula (FLAG), private communication, 2015.</li>
-</ol>
-</li>
-<li><ol>
-<li>S. Aoki et al. (FLAG), Eur. Phys. J. C74, 2890 (2014), Aoki:2013ldr.</li>
-</ol>
-</li>
-</ul>
-<p>The 2018 RPP review may be more accurate but does not cite Aoki:2016frl, which is probably the publication reporting possibly updated results from the proceedings Juettner:2016atf, and does not cite the FLAG December 2017 web update.</p>
-
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[75]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="c">## seen elsewhere: f_K_by_f_pi = 1.1927 ± 0.0038 # FLAG 2017 2+1+1</span>
-<span class="n">f_K_by_f_pi</span> <span class="o">=</span> <span class="mf">1.193</span> <span class="n">±</span> <span class="mf">0.003</span> <span class="c"># FLAG 2017 2+1+1</span>
+<div class=" highlight hl-r"><pre><span></span><span class="c1">##</span>
+<span class="c1">## save last plot</span>
+<span class="c1">##</span>
+save_plot <span class="o">=</span> <span class="kr">function</span><span class="p">(</span>name<span class="p">,</span> plot <span class="o">=</span> last_plot<span class="p">(),</span> width<span class="o">=</span>my.width<span class="p">,</span> height<span class="o">=</span>my.height<span class="p">,</span> horiz.pixels<span class="o">=</span>my.width.pixels<span class="p">)</span> <span class="p">{</span>
+  name <span class="o">=</span> <span class="kp">paste0</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span> name<span class="p">)</span>
+  dpi <span class="o">=</span> my.width.pixels<span class="o">/</span>my.width
+  
+  file.png <span class="o">=</span> <span class="kp">paste</span><span class="p">(</span>name<span class="p">,</span> <span class="s">&quot;png&quot;</span><span class="p">,</span> sep<span class="o">=</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
+  <span class="kp">suppressWarnings</span><span class="p">(</span>ggsave<span class="p">(</span>filename<span class="o">=</span>file.png<span class="p">,</span> width<span class="o">=</span>width<span class="p">,</span> height<span class="o">=</span>height<span class="p">,</span> dpi<span class="o">=</span>dpi<span class="p">,</span> bg <span class="o">=</span> <span class="s">&quot;transparent&quot;</span><span class="p">))</span>
+  <span class="kp">cat</span><span class="p">(</span>file<span class="o">=</span><span class="kp">stderr</span><span class="p">(),</span> <span class="s">&quot;file&quot;</span><span class="p">,</span> file.png<span class="p">,</span> <span class="s">&quot;produced\n&quot;</span><span class="p">)</span>
+  
+  file.pdf <span class="o">=</span> <span class="kp">paste</span><span class="p">(</span>name<span class="p">,</span> <span class="s">&quot;pdf&quot;</span><span class="p">,</span> sep<span class="o">=</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
+  <span class="kp">suppressWarnings</span><span class="p">(</span>ggsave<span class="p">(</span>filename<span class="o">=</span>file.pdf<span class="p">,</span> width<span class="o">=</span>width<span class="p">,</span> height<span class="o">=</span>height<span class="p">,</span> dpi<span class="o">=</span>dpi<span class="p">,</span> bg <span class="o">=</span> <span class="s">&quot;transparent&quot;</span><span class="p">))</span>
+  <span class="kp">cat</span><span class="p">(</span>file<span class="o">=</span><span class="kp">stderr</span><span class="p">(),</span> <span class="s">&quot;file&quot;</span><span class="p">,</span> file.pdf<span class="p">,</span> <span class="s">&quot;produced\n&quot;</span><span class="p">)</span>
+  
+  file.svg <span class="o">=</span> <span class="kp">paste</span><span class="p">(</span>name<span class="p">,</span> <span class="s">&quot;svg&quot;</span><span class="p">,</span> sep<span class="o">=</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
+  <span class="kp">suppressWarnings</span><span class="p">(</span>ggsave<span class="p">(</span>filename<span class="o">=</span>file.svg<span class="p">,</span> width<span class="o">=</span>width<span class="p">,</span> height<span class="o">=</span>height<span class="p">,</span> dpi<span class="o">=</span>dpi<span class="p">,</span> bg <span class="o">=</span> <span class="s">&quot;transparent&quot;</span><span class="p">))</span>
+  <span class="kp">cat</span><span class="p">(</span>file<span class="o">=</span><span class="kp">stderr</span><span class="p">(),</span> <span class="s">&quot;file&quot;</span><span class="p">,</span> file.svg<span class="p">,</span> <span class="s">&quot;produced\n&quot;</span><span class="p">)</span>
+<span class="p">}</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[75]:</div>
-
-
-
-
-<div class="output_latex output_subarea output_execute_result">
-$1.19300 \pm 0.00300$
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>$|V_{ud}| = 0.97420(10)(18) = 0.97420 ± 0.00021$ from PDG 2018 which quotes</p>
-<ul>
-<li>J.C. Hardy and I.S. Towner, Phys. Rev. C91, 0255012 (2015), Vud = 0.97417 ± 0.00021</li>
-<li>J.C. Hardy and I.S. Towner, PoS CKM 2016, 028 (2016), Hardy:2016vhg,
-<a href="https://pos.sissa.it/291/028">https://pos.sissa.it/291/028</a>, Vud = 0.97420 ± 0.00021</li>
-</ul>
-
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[76]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="n">Vud</span> <span class="o">=</span> <span class="mf">0.97420</span> <span class="n">±</span> <span class="mf">0.00021</span>
-<span class="n">Vud</span>
+<div class=" highlight hl-r"><pre><span></span><span class="c1">##--- get all data</span>
+babar09_lines <span class="o">=</span> <span class="kp">readLines</span><span class="p">(</span><span class="s">&quot;babar-2009/BABAR_ISR2pi_EPAPS.txt&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">##--- get begin and end of data sections</span>
+babar09_beg <span class="o">=</span> <span class="kp">grep</span><span class="p">(</span><span class="s">&quot;^\\*\\*\\*\\*\\*\\*\\*\\*&quot;</span><span class="p">,</span> babar09_lines<span class="p">)</span>
+babar09_end <span class="o">=</span> <span class="kt">c</span><span class="p">(</span> <span class="kp">tail</span><span class="p">(</span>babar09_beg<span class="p">,</span> <span class="m">-1</span><span class="p">),</span> <span class="kp">length</span><span class="p">(</span>babar09_lines<span class="p">))</span>
+</pre></div>
 
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[76]:</div>
-
-
-
-
-<div class="output_latex output_subarea output_execute_result">
-$0.97420 \pm 0.00021$
+    </div>
+</div>
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">##--- get total systematic uncertainties</span>
+rc <span class="o">=</span> str_match<span class="p">(</span>babar09_lines<span class="p">[</span>babar09_beg<span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="o">:</span>babar09_end<span class="p">[</span><span class="m">2</span><span class="p">]],</span> <span class="s">&quot;^\\s*(\\S+)\\s*:\\s*(\\S+)\\s+(\\S+)\\s+(\\S+)&quot;</span><span class="p">)</span>
+rc <span class="o">=</span> rc<span class="p">[</span><span class="o">!</span><span class="kp">is.na</span><span class="p">(</span>rc<span class="p">[,</span><span class="m">1</span><span class="p">]),</span> <span class="p">]</span>
+df <span class="o">=</span> <span class="kt">data.frame</span><span class="p">(</span>
+  E_l <span class="o">=</span> <span class="kp">as.numeric</span><span class="p">(</span>rc<span class="p">[,</span> <span class="m">2</span><span class="p">]),</span>
+  E_h <span class="o">=</span> <span class="kp">as.numeric</span><span class="p">(</span>rc<span class="p">[,</span> <span class="m">3</span><span class="p">]),</span>
+  sigma <span class="o">=</span> <span class="kp">as.numeric</span><span class="p">(</span>rc<span class="p">[,</span> <span class="m">4</span><span class="p">]),</span>
+  sigma_unc <span class="o">=</span> <span class="kp">as.numeric</span><span class="p">(</span>rc<span class="p">[,</span> <span class="m">5</span><span class="p">])</span>
+<span class="p">)</span>
+df <span class="o">=</span> <span class="kp">within</span><span class="p">(</span>df<span class="p">,</span> <span class="p">{</span>
+  E <span class="o">=</span> <span class="p">(</span>E_l<span class="o">+</span>E_h<span class="p">)</span><span class="o">/</span><span class="m">2</span>
+<span class="p">})</span>
+</pre></div>
 
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">##--- get low/high E bins limits</span>
+rc <span class="o">=</span> str_match<span class="p">(</span>babar09_lines<span class="p">[</span>babar09_beg<span class="p">[</span><span class="m">3</span><span class="p">]</span><span class="o">:</span>babar09_end<span class="p">[</span><span class="m">3</span><span class="p">]],</span>
+               <span class="kp">paste0</span><span class="p">(</span><span class="s">&quot;^\\s*&quot;</span><span class="p">,</span> <span class="kp">paste</span><span class="p">(</span><span class="kp">rep</span><span class="p">(</span><span class="s">&quot;([^-]+)-([^-\\s]+)&quot;</span><span class="p">,</span> <span class="m">8</span><span class="p">),</span> collapse<span class="o">=</span><span class="s">&quot;\\s+&quot;</span><span class="p">)))</span>
+rc <span class="o">=</span> rc<span class="p">[</span><span class="o">!</span><span class="kp">is.na</span><span class="p">(</span>rc<span class="p">[,</span><span class="m">1</span><span class="p">]),</span> <span class="p">]</span>
+rc <span class="o">=</span> <span class="kp">as.numeric</span><span class="p">(</span><span class="kp">tail</span><span class="p">(</span>rc<span class="p">,</span> <span class="m">-1</span><span class="p">))</span>
+df_syst <span class="o">=</span> <span class="kt">data.frame</span><span class="p">(</span>
+  E_l <span class="o">=</span> rc<span class="p">[</span><span class="kp">seq</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="kp">length</span><span class="p">(</span>rc<span class="p">),</span> <span class="m">2</span><span class="p">)],</span>
+  E_h <span class="o">=</span> rc<span class="p">[</span><span class="kp">seq</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="kp">length</span><span class="p">(</span>rc<span class="p">),</span> <span class="m">2</span><span class="p">)]</span>
+<span class="p">)</span>
+<span class="c1">##--- get permil systematic uncertainty</span>
+rc <span class="o">=</span> str_match<span class="p">(</span>babar09_lines<span class="p">[</span>babar09_beg<span class="p">[</span><span class="m">3</span><span class="p">]</span><span class="o">:</span>babar09_end<span class="p">[</span><span class="m">3</span><span class="p">]],</span>
+               <span class="kp">paste0</span><span class="p">(</span><span class="s">&quot;^\\s*&quot;</span><span class="p">,</span> <span class="kp">paste</span><span class="p">(</span><span class="kp">rep</span><span class="p">(</span><span class="s">&quot;\\(([^\\)]+)\\)&quot;</span><span class="p">,</span> <span class="m">8</span><span class="p">),</span> collapse<span class="o">=</span><span class="s">&quot;\\s+&quot;</span><span class="p">)))</span>
+rc <span class="o">=</span> rc<span class="p">[</span><span class="o">!</span><span class="kp">is.na</span><span class="p">(</span>rc<span class="p">[,</span><span class="m">1</span><span class="p">]),</span> <span class="p">]</span>
+df_syst<span class="o">$</span>unc_permil <span class="o">=</span> <span class="kp">as.numeric</span><span class="p">(</span><span class="kp">tail</span><span class="p">(</span>rc<span class="p">,</span> <span class="m">-1</span><span class="p">))</span>
+df_syst
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">##--- get statistical covariance</span>
+rc <span class="o">=</span> str_match<span class="p">(</span>babar09_lines<span class="p">[</span>babar09_beg<span class="p">[</span><span class="m">4</span><span class="p">]</span><span class="o">:</span>babar09_end<span class="p">[</span><span class="m">4</span><span class="p">]],</span> <span class="s">&quot;^\\s*([0-9\\.Ee\\+\\-]+)&quot;</span><span class="p">)</span>
+rc <span class="o">=</span> <span class="kp">as.numeric</span><span class="p">(</span>rc<span class="p">[</span><span class="o">!</span><span class="kp">is.na</span><span class="p">(</span>rc<span class="p">[,</span><span class="m">1</span><span class="p">]),</span> <span class="m">-1</span><span class="p">])</span>
+stat_cov <span class="o">=</span> <span class="kt">matrix</span><span class="p">(</span>rc<span class="p">,</span> nrow<span class="o">=</span><span class="kp">nrow</span><span class="p">(</span>df<span class="p">),</span> ncol<span class="o">=</span><span class="kp">nrow</span><span class="p">(</span>df<span class="p">))</span>
+<span class="c1">## str(stat_cov)</span>
+df_stat <span class="o">=</span> <span class="kp">expand.grid</span><span class="p">(</span>E_x<span class="o">=</span>df<span class="o">$</span>E<span class="p">,</span> E_y<span class="o">=</span>df<span class="o">$</span>E<span class="p">)</span>
+df_stat<span class="o">$</span>unc <span class="o">=</span> rc
+<span class="c1">## str(df_stat)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">##</span>
+<span class="c1">## plot sigma(e+e- -&gt; pi+pi-)</span>
+<span class="c1">##</span>
+ggplot<span class="p">(</span>df<span class="p">,</span> aes<span class="p">(</span>x <span class="o">=</span> E<span class="p">,</span> y <span class="o">=</span> sigma<span class="p">))</span> <span class="o">+</span>
+  ggtitle<span class="p">(</span>TeX<span class="p">(</span><span class="s">&quot;$e^+e^- - \\pi^+\\pi^- (\\gamma)$&quot;</span><span class="p">))</span> <span class="o">+</span>
+  geom_point<span class="p">(</span>size<span class="o">=</span><span class="m">1</span><span class="p">)</span> <span class="o">+</span>
+  geom_errorbar<span class="p">(</span>aes<span class="p">(</span>ymin<span class="o">=</span>sigma<span class="o">-</span>sigma_unc<span class="p">,</span> ymax<span class="o">=</span>sigma<span class="o">+</span>sigma_unc<span class="p">))</span> <span class="o">+</span>
+  scale_x_continuous<span class="p">(</span>name <span class="o">=</span> TeX<span class="p">(</span><span class="s">&quot;E \\[GeV\\]&quot;</span><span class="p">),</span> breaks<span class="o">=</span>pretty_breaks<span class="p">(</span><span class="m">7</span><span class="p">))</span> <span class="o">+</span>
+  scale_y_continuous<span class="p">(</span>name <span class="o">=</span> TeX<span class="p">(</span><span class="s">&quot;$d\\sigma/dE$&quot;</span><span class="p">),</span>
+                     breaks<span class="o">=</span>pretty_breaks<span class="p">(</span><span class="m">7</span><span class="p">))</span> <span class="o">+</span>
+  <span class="kc">NULL</span>
+save_plot<span class="p">(</span><span class="s">&quot;babar09-pippim&quot;</span><span class="p">)</span>
+<span class="kp">getOption</span><span class="p">(</span><span class="s">&quot;jupyter.plot_mimetypes&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">##</span>
+<span class="c1">## plot sigma(e+e- -&gt; pi+pi-) at rho peak</span>
+<span class="c1">##</span>
+ggplot<span class="p">(</span>df<span class="p">,</span> aes<span class="p">(</span>x <span class="o">=</span> E<span class="p">,</span> y <span class="o">=</span> sigma<span class="p">))</span> <span class="o">+</span>
+  ggtitle<span class="p">(</span>TeX<span class="p">(</span><span class="s">&quot;$e^+e^- \\rightarrow \\pi^+\\pi^- (\\gamma)$&quot;</span><span class="p">))</span> <span class="o">+</span>
+  geom_point<span class="p">(</span>size<span class="o">=</span><span class="m">1</span><span class="p">)</span> <span class="o">+</span>
+  geom_errorbar<span class="p">(</span>aes<span class="p">(</span>ymin<span class="o">=</span>sigma<span class="o">-</span>sigma_unc<span class="p">,</span> ymax<span class="o">=</span>sigma<span class="o">+</span>sigma_unc<span class="p">))</span> <span class="o">+</span>
+  scale_x_continuous<span class="p">(</span>name <span class="o">=</span> TeX<span class="p">(</span><span class="s">&quot;E \\[GeV\\]&quot;</span><span class="p">),</span> breaks<span class="o">=</span>pretty_breaks<span class="p">(</span><span class="m">7</span><span class="p">))</span> <span class="o">+</span>
+  scale_y_continuous<span class="p">(</span>name <span class="o">=</span> TeX<span class="p">(</span><span class="s">&quot;$d\\sigma/dE$&quot;</span><span class="p">),</span> breaks<span class="o">=</span>pretty_breaks<span class="p">(</span><span class="m">7</span><span class="p">))</span> <span class="o">+</span>
+  coord_cartesian<span class="p">(</span>xlim<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="m">0.65</span><span class="p">,</span> <span class="m">0.85</span><span class="p">))</span> <span class="o">+</span>
+  <span class="kc">NULL</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">##</span>
+<span class="c1">## plot statistical correlation at the rho peak</span>
+<span class="c1">##</span>
+Emin <span class="o">=</span> <span class="m">0.6</span>
+Emax <span class="o">=</span> <span class="m">0.85</span>
+df_stat_rhopeak <span class="o">=</span> <span class="kp">subset</span><span class="p">(</span>df_stat<span class="p">,</span> E_x <span class="o">&gt;=</span> Emin <span class="o">&amp;</span> E_x <span class="o">&lt;=</span> Emax <span class="o">&amp;</span> E_y <span class="o">&gt;=</span> Emin <span class="o">&amp;</span> E_y <span class="o">&lt;=</span> Emax<span class="p">)</span>
+ggplot<span class="p">(</span>df_stat_rhopeak<span class="p">,</span> aes<span class="p">(</span>x<span class="o">=</span>E_x<span class="p">,</span> y<span class="o">=</span>E_y<span class="p">,</span> unc<span class="p">))</span> <span class="o">+</span> geom_tile<span class="p">(</span>aes<span class="p">(</span>fill <span class="o">=</span> unc<span class="p">))</span> <span class="o">+</span>
+  ggtitle<span class="p">(</span>TeX<span class="p">(</span><span class="s">&quot;$e^+e^- \\rightarrow \\pi^+\\pi^- (\\gamma)$ statistical covariance&quot;</span><span class="p">))</span> <span class="o">+</span>
+  scale_fill_gradient<span class="p">(</span>low<span class="o">=</span><span class="s">&quot;white&quot;</span><span class="p">,</span> high<span class="o">=</span><span class="s">&quot;steelblue&quot;</span><span class="p">)</span> <span class="o">+</span>
+  <span class="kc">NULL</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
 
