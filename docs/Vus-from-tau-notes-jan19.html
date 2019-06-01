@@ -13323,12 +13323,19 @@ arXiv:1904.08731 [hep-lat], <a href="https://inspirehep.net/record/1730333">DiCa
 </ul>
 <p>Our results in Eqs. (101) - (102) can be compared with the ChPT predictions δRphysπ = 0.0176(21) and δRphysK = 0.0064(24) obtained in Ref. [26] and adopted by the PDG [20, 25].</p>
 <p>[26] V. Cirigliano and H. Neufeld, Phys. Lett. B 700 (2011) 7 [arXiv:1102.0563 [hep-ph]].</p>
-<p>Taking the experimental values Γ(π− → µ−ν¯µ[γ]) = 3.8408(7)·107s−1 and Γ(K− → µ −ν¯µ[γ]) = 5.134(11) · 107s−1 from the PDG [20] and using our results (101) - (102), we obtain
-f(0)π|Vud| = 127.28 (2)exp (12)th MeV = 127.28 (12) MeV ,
-f(0)K |Vus| = 35.23 (4)exp (2)th MeV = 35.23 (5) MeV ,</p>
+<p>Taking the experimental values Γ(π− → µ−ν¯µ[γ]) = 3.8408(7)·107s−1 and Γ(K− → µ −ν¯µ[γ]) = 5.134(11) · 107s−1 from the PDG [20] and using our results (101) - (102), we obtain</p>
+<p>f(0)π|Vud| = 127.28 (2)exp (12)th MeV = 127.28 (12) MeV - consistent with PDG based on Cirigliano Neufeld 2011<br>
+f(0)K|Vus| = 35.23 (4)exp (2)th MeV = 35.23 (5) MeV - $2\sigma$ larger than PDG based on Cirigliano Neufeld 2011</p>
 <p>Taking the experimental value of the rate for the Kµ2 decay, Eq. (3) together with Γ(0)(K± → µ± ν) obtained using the lattice determination of the kaon decay constant we obtain |Vus| = 0.22567(42), in agreement with the latest estimate |Vus| = 0.2253(7), recently updated by the PDG [20] but with better precision.</p>
-<p>Alternatively, by taking the ratio of Kµ2 and πµ2 decay rates and the updated value |Vud| = 0.97420(21) from
-super-allowed nuclear beta decays [21], we obtain |Vus| = 0.22538(38).</p>
+<p>Cannot use for Vud, since fπ used to set lattice QCD scale.</p>
+<p>Using f(0)K = 156.11(21) MeV [3, 42–44], we find that Eq. (104) implies |Vus| = 0.22567(26)exp (33)th = 0.22567 (42). The average value of fK± quoted by FLAG [3] includes the strong IB corrections. In order to obtain f(0)K therefore, we have subtracted this correction which is given explicitly in Refs. [42–44].</p>
+<p>Using the pion and kaon experimental decay rates we get</p>
+<p>$\displaystyle \frac{|V_{us}|}{|V_{ud}|} \frac{f(0)_K}{f(0)_\pi} = 0.27683\,(29)\text{exp}\,(20)\text{th} = 0.27683\,(35)$</p>
+<p>Using the best Nf = 2 + 1 + 1 lattice determination of the ratio of the QCD kaon and pion decay
+constants, f(0)K/f(0)π = 1.1966 (13) [3, 42–44], we find</p>
+<p>$\displaystyle\frac{|V_{us}|}{|V_{ud}|} = 0.23134\,(24)\text{exp}\,(30)\exp{th} = 0.23134\,(38)$</p>
+<p>Taking the updated value |Vud| = 0.97420 (21) from super-allowed nuclear beta decays [21], Eq. (108) yields the following value for the CKM element |Vus|:</p>
+<p>|Vus| = 0.22538 (24)exp (30)th = 0.22538 (38)</p>
 <p>The unitarity of the first row of the CKM matrix is satisfied at the per-mille level; e.g. taking the value of Vus from the ratio of decay rates and |Vub| = 0.00413(49) [20], we obtain |Vud|^2 + |Vus|^2 + |Vub|^2 = 0.99988(44).</p>
 <p>Before closing this section, we comment briefly about the comparison between our result δRphysK = 0.0024(10) and the corresponding model-dependent ChPT prediction δRphysK = 0.0064(24) from Ref. [26]. The latter is obtained by adding a model-dependent QED correction of 0.0107(21) and a model-independent NLO strong IB contribution equal to −0.0043(12). Our result on the other hand, obtained in the GRS prescription, stems from a QED correction equal to 0.0088(9) and a strong IB term equal to −0.0064(7) (see also Ref. [45]). The difference between our result and
 the ChPT prediction of Ref. [26] appears to be mainly due to a different strong IB contribution. Thus, in the present Nf = 2 + 1 + 1 study, we confirm for the strong IB term a discrepancy at the level of about 2 standard deviations, which was already observed at Nf = 2 in Ref. [4].</p>
@@ -13339,7 +13346,7 @@ the ChPT prediction of Ref. [26] appears to be mainly due to a different strong 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[78]:</div>
+<div class="prompt input_prompt">In&nbsp;[84]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13349,18 +13356,14 @@ the ChPT prediction of Ref. [26] appears to be mainly due to a different strong 
 <span class="c">## - reproduction is not perfect,</span>
 <span class="c">##   Di Carlo 2019 Vus = 0.22538 (24)exp (30)th = 0.22538 (38)</span>
 <span class="c">##</span>
+<span class="c">## Di Carlo 2019 computes rad correction _inclusive_ of IB term, to be used with isospin-limit f_K, f_pi</span>
+<span class="c">##</span>
 <span class="n">dRrad_kmu_phys</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.24</span> <span class="n">±</span> <span class="mf">0.10</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="c"># 0.24(10)</span>
 <span class="n">dRrad_pimu_phys</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.53</span> <span class="n">±</span> <span class="mf">0.19</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="c"># 1.53(19)</span>
 <span class="n">dRrad_kmu_by_pimu_phys</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.26</span> <span class="n">±</span> <span class="mf">0.14</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="c"># = −0.0126(14)</span>
 <span class="n">Vud</span> <span class="o">=</span> <span class="mf">0.97420</span> <span class="n">±</span> <span class="mf">0.00021</span>
 <span class="n">gamma_pimu2</span> <span class="o">=</span> <span class="p">(</span><span class="mf">3.8408</span> <span class="n">±</span> <span class="mf">0.0007</span><span class="p">)</span><span class="o">*</span><span class="mf">1e7</span>
 <span class="n">gamma_Kmu2</span> <span class="o">=</span> <span class="p">(</span><span class="mf">5.134</span> <span class="n">±</span> <span class="mf">0.011</span><span class="p">)</span><span class="o">*</span><span class="mf">1e7</span>
-<span class="c"># quant$quant.add.single(&quot;m_mu&quot;, 105.6583745, 0.0000024) ## changed18</span>
-<span class="c"># quant$quant.add.single(&quot;tau_mu&quot;, 2.1969811e-6, 0.000022e-6) ## changed14</span>
-<span class="c"># quant$quant.add.single(&quot;m_pi&quot;, 139.57061, 0.00024) ## changed18</span>
-<span class="c"># quant$quant.add.single(&quot;tau_pi&quot;, 2.6033e-8, 0.0005e-8)</span>
-<span class="c"># quant$quant.add.single(&quot;m_K&quot;, 493.677, 0.016)</span>
-<span class="c"># quant$quant.add.single(&quot;tau_K&quot;, 1.2380e-8, 0.0020e-8)</span>
 <span class="n">m_mu</span> <span class="o">=</span> <span class="mf">105.6583745</span> <span class="n">±</span> <span class="mf">0.0000024</span>
 <span class="n">m_pi</span> <span class="o">=</span> <span class="mf">139.57061</span> <span class="n">±</span> <span class="mf">0.00024</span>
 <span class="n">m_K</span> <span class="o">=</span> <span class="mf">493.677</span> <span class="n">±</span> <span class="mf">0.016</span>
@@ -13374,6 +13377,7 @@ the ChPT prediction of Ref. [26] appears to be mainly due to a different strong 
   <span class="p">)</span> <span class="o">/</span> <span class="n">fK_by_fpi</span>
 
 <span class="n">Vus</span> <span class="o">=</span> <span class="n">Vus_by_Vud</span> <span class="o">*</span> <span class="n">Vud</span>
+<span class="n">println</span><span class="p">(</span><span class="s">&quot;Di Carlo 2019 Vus = &quot;</span><span class="p">,</span> <span class="n">Vus</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13386,15 +13390,79 @@ the ChPT prediction of Ref. [26] appears to be mainly due to a different strong 
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[78]:</div>
+    <div class="prompt"></div>
 
 
-
-
-<div class="output_latex output_subarea output_execute_result">
-$0.22535 \pm 0.00038$
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Di Carlo 2019 Vus = 0.22535 ± 0.00038
+</pre>
+</div>
 </div>
 
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[108]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
+<span class="c">## compare uncertainties due to form factors and radiative corrections</span>
+<span class="c">##</span>
+<span class="c">## HFLAV 2018 computes Vus from tau -&gt; K / tau -&gt; pi</span>
+<span class="c">## Di Carlo 2019 from K -&gt; mu / pi -&gt; mu</span>
+<span class="c">##</span>
+<span class="n">println</span><span class="p">(</span><span class="s">&quot;compare HFLAV 2018 and Di Carlo 2019 on precision of form factor &amp; rad. corrections for Vus&quot;</span><span class="p">)</span>
+<span class="c">##</span>
+<span class="c">## HFLAV 2018</span>
+<span class="c">##</span>
+<span class="n">dRrad_kmu_by_pimu</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.0069</span> <span class="n">±</span> <span class="mf">0.0017</span><span class="p">)</span>
+<span class="n">f_Kpm_by_f_pipm</span> <span class="o">=</span> <span class="mf">1.1932</span> <span class="n">±</span> <span class="mf">0.0019</span>
+<span class="n">factor_hflav18</span> <span class="o">=</span> <span class="n">f_Kpm_by_f_pipm</span> <span class="o">*</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">dRrad_kmu_by_pimu</span><span class="p">)</span>
+<span class="n">Vus_unc_hflav18_perc</span> <span class="o">=</span> <span class="mf">0.001540</span><span class="o">/</span><span class="mf">0.223554</span> <span class="o">*</span><span class="mi">100</span>
+<span class="n">Vus_unc_hflav18_ffrad_perc</span> <span class="o">=</span> <span class="n">factor_hflav18</span><span class="o">.</span><span class="n">err</span> <span class="o">/</span> <span class="n">factor_hflav18</span><span class="o">.</span><span class="n">val</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="nd">@printf</span><span class="p">(</span>
+  <span class="s">&quot;precision HFLAV 2018    </span><span class="si">%.2f%%</span><span class="s"> (total </span><span class="si">%.2f%%</span><span class="s">)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+  <span class="n">Vus_unc_hflav18_ffrad_perc</span><span class="p">,</span>
+  <span class="n">Vus_unc_hflav18_perc</span>
+<span class="p">)</span>
+<span class="c">##</span>
+<span class="c">## Di Carlo 2019</span>
+<span class="c">##</span>
+<span class="n">factor_dicarlo19</span> <span class="o">=</span> <span class="n">fK_by_fpi</span> <span class="o">*</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">dRrad_kmu_by_pimu_phys</span><span class="p">)</span>
+<span class="n">Vus_unc_dicarlo19_ffrad_perc</span> <span class="o">=</span> <span class="n">factor_dicarlo19</span><span class="o">.</span><span class="n">err</span> <span class="o">/</span> <span class="n">factor_dicarlo19</span><span class="o">.</span><span class="n">val</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="nd">@printf</span> <span class="s">&quot;precision Di Carlo 2019 </span><span class="si">%.2f%%</span><span class="se">\n</span><span class="s">&quot;</span> <span class="n">Vus_unc_dicarlo19_ffrad_perc</span>
+
+<span class="c">##</span>
+<span class="c">## how much would HFLAV 2018 improve using Di Carlo 2019</span>
+<span class="c">##</span>
+<span class="n">Vus_unc_hflav18_upd_perc</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span>
+  <span class="n">Vus_unc_hflav18_perc</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="n">Vus_unc_hflav18_ffrad_perc</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Vus_unc_dicarlo19_ffrad_perc</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span>
+<span class="nd">@printf</span> <span class="s">&quot;updated HFLAV 2018 precision </span><span class="si">%.2f%%</span><span class="se">\n</span><span class="s">&quot;</span> <span class="n">Vus_unc_hflav18_upd_perc</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>compare HFLAV 2018 and Di Carlo 2019 on precision of form factor &amp; rad. corrections for Vus
+precision HFLAV 2018    0.18% (total 0.69%)
+precision Di Carlo 2019 0.13%
+updated HFLAV 2018 precision 0.68%
+</pre>
+</div>
 </div>
 
 </div>
