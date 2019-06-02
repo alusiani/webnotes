@@ -13127,7 +13127,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[112]:</div>
+<div class="prompt input_prompt">In&nbsp;[158]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="k">using</span> <span class="n">Printf</span>
@@ -13323,7 +13323,7 @@ $</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[148]:</div>
+<div class="prompt input_prompt">In&nbsp;[159]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">dRrad_pimu</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.76</span> <span class="n">±</span> <span class="mf">0.21</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="c"># 0.0176(21)</span>
@@ -13413,21 +13413,21 @@ the ChPT prediction of Ref. [26] appears to be mainly due to a different strong 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[84]:</div>
+<div class="prompt input_prompt">In&nbsp;[168]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
 <span class="c">## reproduce Di Carlo 2019 result for Vus</span>
 <span class="c">##</span>
 <span class="c">## - use PDG 2019 constants</span>
-<span class="c">## - reproduction is not perfect,</span>
+<span class="c">## - reproduction is not perfect unless with a correction</span>
 <span class="c">##   Di Carlo 2019 Vus = 0.22538 (24)exp (30)th = 0.22538 (38)</span>
 <span class="c">##</span>
 <span class="c">## Di Carlo 2019 computes rad correction _inclusive_ of IB term, to be used with isospin-limit f_K, f_pi</span>
 <span class="c">##</span>
 <span class="n">dRrad_pimu_phys</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.53</span> <span class="n">±</span> <span class="mf">0.19</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="c"># 1.53(19)</span>
 <span class="n">dRrad_kmu_phys</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.24</span> <span class="n">±</span> <span class="mf">0.10</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="c"># 0.24(10)</span>
-<span class="n">dRrad_kmu_by_pimu_phys</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.26</span> <span class="n">±</span> <span class="mf">0.14</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="c"># = −0.0126(14)</span>
+<span class="n">dRrad_kmu_by_pimu_phys</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.29</span> <span class="n">±</span> <span class="mf">0.14</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="c"># modified from -0.0126(14) which seems wrong</span>
 <span class="n">Vud</span> <span class="o">=</span> <span class="mf">0.97420</span> <span class="n">±</span> <span class="mf">0.00021</span>
 <span class="n">gamma_pimu2</span> <span class="o">=</span> <span class="p">(</span><span class="mf">3.8408</span> <span class="n">±</span> <span class="mf">0.0007</span><span class="p">)</span><span class="o">*</span><span class="mf">1e7</span>
 <span class="n">gamma_Kmu2</span> <span class="o">=</span> <span class="p">(</span><span class="mf">5.134</span> <span class="n">±</span> <span class="mf">0.011</span><span class="p">)</span><span class="o">*</span><span class="mf">1e7</span>
@@ -13461,7 +13461,7 @@ the ChPT prediction of Ref. [26] appears to be mainly due to a different strong 
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Di Carlo 2019 Vus = 0.22535 ± 0.00038
+<pre>Di Carlo 2019 Vus = 0.22538 ± 0.00038
 </pre>
 </div>
 </div>
@@ -13472,7 +13472,7 @@ the ChPT prediction of Ref. [26] appears to be mainly due to a different strong 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[108]:</div>
+<div class="prompt input_prompt">In&nbsp;[161]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13538,7 +13538,7 @@ updated HFLAV 2018 precision 0.68%
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[110]:</div>
+<div class="prompt input_prompt">In&nbsp;[162]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13610,7 +13610,7 @@ That is consistent with the paper numbers.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[79]:</div>
+<div class="prompt input_prompt">In&nbsp;[163]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13665,7 +13665,7 @@ Rrad_tauK_by_taupi = 1.0003 ± 0.0044
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[80]:</div>
+<div class="prompt input_prompt">In&nbsp;[164]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13839,13 +13839,14 @@ refereed journals, or that are straightforward conference updates of published a
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[81]:</div>
+<div class="prompt input_prompt">In&nbsp;[165]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
 <span class="c">## random notes</span>
 <span class="c">##</span>
 <span class="c">## seen elsewhere: f_K_by_f_pi = 1.1927 ± 0.0038 # FLAG 2017 2+1+1</span>
+<span class="n">Base</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">io</span><span class="o">::</span><span class="kt">IO</span><span class="p">,</span> <span class="n">f</span><span class="o">::</span><span class="kt">Float64</span><span class="p">)</span> <span class="o">=</span> <span class="nd">@printf</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%.5f</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
 <span class="n">f_K_by_f_pi</span> <span class="o">=</span> <span class="mf">1.193</span> <span class="n">±</span> <span class="mf">0.003</span> <span class="c"># FLAG 2017 2+1+1</span>
 </pre></div>
 
@@ -13859,13 +13860,13 @@ refereed journals, or that are straightforward conference updates of published a
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[81]:</div>
+    <div class="prompt output_prompt">Out[165]:</div>
 
 
 
 
 <div class="output_latex output_subarea output_execute_result">
-$1.19 \pm 0.00$
+$1.19300 \pm 0.00300$
 </div>
 
 </div>
