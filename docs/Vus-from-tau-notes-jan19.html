@@ -13127,11 +13127,12 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[77]:</div>
+<div class="prompt input_prompt">In&nbsp;[112]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="k">using</span> <span class="n">Printf</span>
 <span class="k">using</span> <span class="n">Measurements</span>
+<span class="k">using</span> <span class="n">Covar</span>
 
 <span class="c">## see also https://docs.julialang.org/en/v1.1/manual/types/#man-custom-pretty-printing-1</span>
 <span class="n">Base</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">io</span><span class="o">::</span><span class="kt">IO</span><span class="p">,</span> <span class="n">f</span><span class="o">::</span><span class="kt">Float64</span><span class="p">)</span> <span class="o">=</span> <span class="nd">@printf</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%.5f</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
@@ -13305,9 +13306,75 @@ arXiv:1904.08731 [hep-lat], <a href="https://inspirehep.net/record/1730333">DiCa
 <p>$\delta R^{\text{phys}}_{\pi\mu\nu} = 0.0176(21)$<br>
 $\delta R^{\text{phys}}_{K\mu\nu} = 0.0064(24)$</p>
 <p>Only $\delta R^{\text{phys}}_{K\mu\nu}$ gets the strong-isospin-breaking correction because only $f_K$ needs a correction between the isospin-limit and the physical $f_{K^\pm}$ value.</p>
+<p>What is the correlation between dRrad_pimu and dRrad_kmu to reproduce the uncertainty on their difference reported  by Cirigliano and Neufeld 2011?</p>
+<p>$\displaystyle
+\delta^{\text{EM}}_{K \to \mu \nu} - \delta^{\text{EM}}_{\pi \to \mu \nu} =
+f(\delta^{\text{EM}}_{K \to \mu \nu}, \delta^{\text{EM}}_{\pi \to \mu \nu}) = f(q_i)$</p>
+<p>$\displaystyle
+V(f) = \frac{\partial f}{\partial q_i} V_{ij}(q) \frac{\partial f}{\partial q_j}$</p>
+<p>$\displaystyle
+V(f) = V_{11} + V_{22} + 2(-1)V_{12}$</p>
+<p>$\displaystyle
+V_{12} = \frac{V(f) - (V_{11} + V_{22})}{2(-1)}
+$</p>
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[148]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">dRrad_pimu</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.76</span> <span class="n">±</span> <span class="mf">0.21</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="c"># 0.0176(21)</span>
+<span class="n">dRrad_kmu</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.07</span> <span class="n">±</span> <span class="mf">0.21</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="c"># 0.0107(21)</span>
+<span class="n">dRrad_kmu_by_pimu</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.69</span> <span class="n">±</span> <span class="mf">0.17</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="c"># = -0.069(17)</span>
+
+<span class="n">dRrad_pimu_dRrad_kmu_cov</span> <span class="o">=</span>  <span class="p">(</span><span class="n">dRrad_kmu_by_pimu</span><span class="o">.</span><span class="n">err</span><span class="o">^</span><span class="mi">2</span> <span class="o">-</span> <span class="p">(</span><span class="n">dRrad_kmu</span><span class="o">.</span><span class="n">err</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="n">dRrad_pimu</span><span class="o">.</span><span class="n">err</span><span class="o">^</span><span class="mi">2</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">dRrad_pimu_dRrad_kmu_corr</span> <span class="o">=</span> <span class="n">dRrad_pimu_dRrad_kmu_cov</span> <span class="o">/</span> <span class="p">(</span><span class="n">dRrad_kmu</span><span class="o">.</span><span class="n">err</span><span class="o">*</span><span class="n">dRrad_pimu</span><span class="o">.</span><span class="n">err</span><span class="p">)</span>
+
+<span class="n">println</span><span class="p">(</span><span class="s">&quot;correlation between dRrad_kmu and dRrad_pimu = &quot;</span><span class="p">,</span> <span class="n">dRrad_pimu_dRrad_kmu_corr</span><span class="p">)</span>
+
+<span class="c">##</span>
+<span class="c">## test that the compouted covariance works OK</span>
+<span class="c">##</span>
+
+<span class="n">kpi</span><span class="p">,</span> <span class="n">kmu</span> <span class="o">=</span> <span class="nd">@covar_system</span><span class="p">(</span>
+  <span class="p">[</span><span class="n">dRrad_pimu</span><span class="o">.</span><span class="n">val</span><span class="p">,</span> <span class="n">dRrad_kmu</span><span class="o">.</span><span class="n">val</span><span class="p">],</span>
+  <span class="p">[</span>
+    <span class="n">dRrad_pimu</span><span class="o">.</span><span class="n">err</span><span class="o">^</span><span class="mi">2</span>         <span class="n">dRrad_pimu_dRrad_kmu_cov</span><span class="p">;</span>
+    <span class="n">dRrad_pimu_dRrad_kmu_cov</span> <span class="n">dRrad_kmu</span><span class="o">.</span><span class="n">err</span><span class="o">^</span><span class="mi">2</span>
+  <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">dRrad_kmu_by_pimu_calc</span> <span class="o">=</span> <span class="n">kmu</span> <span class="o">-</span> <span class="n">kpi</span>
+
+<span class="n">println</span><span class="p">(</span><span class="s">&quot;dRrad_kmu_by_pimu using correlated dRrad_kmu and dRrad_pimu: &quot;</span><span class="p">,</span> <span class="n">dRrad_kmu_by_pimu_calc</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>correlation between dRrad_kmu and dRrad_pimu = 0.67234
+dRrad_kmu_by_pimu using correlated dRrad_kmu and dRrad_pimu: f({xᵢ}) = -0.00690 ± 0.00170
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
@@ -13317,8 +13384,8 @@ Light-meson leptonic decay rates in lattice QCD+QED<br>
 arXiv:1904.08731 [hep-lat], <a href="https://inspirehep.net/record/1730333">DiCarlo:2019thl</a></p>
 <p>EM radiative corrections inclusive of strong-isospin-breaking term to be used with the strong-isospin-symmetric lattice QCD $f_K$ (and $f_\pi$):</p>
 <ul>
-<li>$\delta R_{K^-\to\mu^-\nu} = 0.24(10) \%$</li>
 <li>$\delta R_{\pi^-\to\mu^-\nu} = 1.53(19) \%$</li>
+<li>$\delta R_{K^-\to\mu^-\nu} = 0.24(10) \%$</li>
 <li>$\delta R_{K^-\to\mu^-\nu} - \delta R_{\pi^-\to\mu^-\nu} = -1.26(14) \%$</li>
 </ul>
 <p>Our results in Eqs. (101) - (102) can be compared with the ChPT predictions δRphysπ = 0.0176(21) and δRphysK = 0.0064(24) obtained in Ref. [26] and adopted by the PDG [20, 25].</p>
@@ -13358,8 +13425,8 @@ the ChPT prediction of Ref. [26] appears to be mainly due to a different strong 
 <span class="c">##</span>
 <span class="c">## Di Carlo 2019 computes rad correction _inclusive_ of IB term, to be used with isospin-limit f_K, f_pi</span>
 <span class="c">##</span>
-<span class="n">dRrad_kmu_phys</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.24</span> <span class="n">±</span> <span class="mf">0.10</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="c"># 0.24(10)</span>
 <span class="n">dRrad_pimu_phys</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.53</span> <span class="n">±</span> <span class="mf">0.19</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="c"># 1.53(19)</span>
+<span class="n">dRrad_kmu_phys</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.24</span> <span class="n">±</span> <span class="mf">0.10</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="c"># 0.24(10)</span>
 <span class="n">dRrad_kmu_by_pimu_phys</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.26</span> <span class="n">±</span> <span class="mf">0.14</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="c"># = −0.0126(14)</span>
 <span class="n">Vud</span> <span class="o">=</span> <span class="mf">0.97420</span> <span class="n">±</span> <span class="mf">0.00021</span>
 <span class="n">gamma_pimu2</span> <span class="o">=</span> <span class="p">(</span><span class="mf">3.8408</span> <span class="n">±</span> <span class="mf">0.0007</span><span class="p">)</span><span class="o">*</span><span class="mf">1e7</span>
@@ -13775,7 +13842,10 @@ refereed journals, or that are straightforward conference updates of published a
 <div class="prompt input_prompt">In&nbsp;[81]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="c">## seen elsewhere: f_K_by_f_pi = 1.1927 ± 0.0038 # FLAG 2017 2+1+1</span>
+<div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
+<span class="c">## random notes</span>
+<span class="c">##</span>
+<span class="c">## seen elsewhere: f_K_by_f_pi = 1.1927 ± 0.0038 # FLAG 2017 2+1+1</span>
 <span class="n">f_K_by_f_pi</span> <span class="o">=</span> <span class="mf">1.193</span> <span class="n">±</span> <span class="mf">0.003</span> <span class="c"># FLAG 2017 2+1+1</span>
 </pre></div>
 
@@ -13807,7 +13877,7 @@ $1.19 \pm 0.00$
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>$|V_{ud}| = 0.97420(10)(18) = 0.97420 ± 0.00021$ from PDG 2018 which quotes</p>
+<h2 id="Vus-in-PDG-2018">Vus in PDG 2018<a class="anchor-link" href="#Vus-in-PDG-2018">&#182;</a></h2><p>$|V_{ud}| = 0.97420(10)(18) = 0.97420 ± 0.00021$ from PDG 2018 which quotes</p>
 <ul>
 <li>J.C. Hardy and I.S. Towner, Phys. Rev. C91, 0255012 (2015), Vud = 0.97417 ± 0.00021</li>
 <li>J.C. Hardy and I.S. Towner, PoS CKM 2016, 028 (2016), Hardy:2016vhg,
@@ -13816,40 +13886,6 @@ $1.19 \pm 0.00$
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[82]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="n">Vud</span> <span class="o">=</span> <span class="mf">0.97420</span> <span class="n">±</span> <span class="mf">0.00021</span>
-<span class="n">Vud</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[82]:</div>
-
-
-
-
-<div class="output_latex output_subarea output_execute_result">
-$0.97 \pm 0.00$
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
     </div>
   </div>
