@@ -13127,7 +13127,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[158]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="k">using</span> <span class="n">Printf</span>
@@ -13250,9 +13250,10 @@ $\delta R_{K^-\to\mu^-\nu / \pi^-\to\mu^-\nu} = -(1.13 \pm 0.23)\% = -(0.69 \pm 
 </li>
 <li>C.&amp;N. did structure dependent calculations, they use M.&amp;S. calculation in the limit of point-like mesons (universal)</li>
 </ul>
-<p>The <a href="http://pdg.lbl.gov/2018/reviews/rpp2018-rev-pseudoscalar-meson-decay-cons.pdf">RPP review on Leptonic Decays of Charged Pseudoscalar Mesons</a> reports</p>
+<p>The <a href="http://pdg.lbl.gov/2018/reviews/rpp2018-rev-pseudoscalar-meson-decay-cons.pdf">2018 RPP review on Leptonic Decays of Charged Pseudoscalar Mesons</a> reports</p>
 <p>$\delta R_{\pi^-\to\mu^-\nu} = 0.0176(21)$<br>
 $\delta R_{K^-\to\mu^-\nu} = 0.0107(21)$</p>
+<p>The review was "revised in March 2016" and the values are constant since PDG 2015.</p>
 <p>The references used are:</p>
 <ul>
 <li><ol>
@@ -13294,18 +13295,10 @@ from Ref. 17. This corresponds to the value used by A.Pich without the isospin-b
 <p>$\delta^{\text{EM}}_{K \to \mu \nu} - \delta^{\text{EM}}_{\pi \to \mu \nu} = -0.0069(17)$</p>
 <p>and strong-isospin-breaking correction</p>
 <p>$\delta^{\text{IB}}_{K \to \mu \nu} - \delta^{\text{IB}}_{\pi \to \mu \nu} = -0.0043(12)$</p>
-<p>Cirigliano and Neufeld 2011 give the the formulas to compute separately the two contributions. PDG 2016 review of pseudoscalar meson decays does the calculations using up-to-date inputs and obtains</p>
+<p>Cirigliano and Neufeld 2011 give the the formulas to compute separately the two contributions separately, for $\pi \to \mu \nu$ and $K \to \mu \nu$. PDG 2016 review of pseudoscalar meson decays does the calculations using up-to-date inputs and obtains</p>
 <p>$\delta^{\text{EM}}_{\pi \to \mu \nu} = 0.0176(21)$<br>
 $\delta^{\text{EM}}_{K \to \mu \nu} = 0.0107(21)$</p>
 <p>(Jonathan L. Rosner, Sheldon Stone, Ruth S. Van de Water, Leptonic Decays of Charged Pseudoscalar Mesons - 2015, <a href="https://arxiv.org/abs/1509.02220">arXiv:1509.02220 [hep-ph]</a>)</p>
-<p>The paper</p>
-<p>M. Di Carlo, D. Giusti, V. Lubicz, G. Martinelli, C.T. Sachrajda, F. Sanfilippo, S. Simula, N. Tantalo<br>
-Light-meson leptonic decay rates in lattice QCD+QED<br>
-arXiv:1904.08731 [hep-lat], <a href="https://inspirehep.net/record/1730333">DiCarlo:2019thl</a></p>
-<p>cites Cirigliano and Neufeld 2011 and PDG 2016 and reports:</p>
-<p>$\delta R^{\text{phys}}_{\pi\mu\nu} = 0.0176(21)$<br>
-$\delta R^{\text{phys}}_{K\mu\nu} = 0.0064(24)$</p>
-<p>Only $\delta R^{\text{phys}}_{K\mu\nu}$ gets the strong-isospin-breaking correction because only $f_K$ needs a correction between the isospin-limit and the physical $f_{K^\pm}$ value.</p>
 <p>What is the correlation between dRrad_pimu and dRrad_kmu to reproduce the uncertainty on their difference reported  by Cirigliano and Neufeld 2011?</p>
 <p>$\displaystyle
 \delta^{\text{EM}}_{K \to \mu \nu} - \delta^{\text{EM}}_{\pi \to \mu \nu} =
@@ -13323,7 +13316,7 @@ $</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[159]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">dRrad_pimu</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.76</span> <span class="n">±</span> <span class="mf">0.21</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="c"># 0.0176(21)</span>
@@ -13388,7 +13381,12 @@ arXiv:1904.08731 [hep-lat], <a href="https://inspirehep.net/record/1730333">DiCa
 <li>$\delta R_{K^-\to\mu^-\nu} = 0.24(10) \%$</li>
 <li>$\delta R_{K^-\to\mu^-\nu} - \delta R_{\pi^-\to\mu^-\nu} = -1.26(14) \%$</li>
 </ul>
-<p>Our results in Eqs. (101) - (102) can be compared with the ChPT predictions δRphysπ = 0.0176(21) and δRphysK = 0.0064(24) obtained in Ref. [26] and adopted by the PDG [20, 25].</p>
+<p>Our results in Eqs. (101) - (102) can be compared with the ChPT predictions obtained in Ref. [26] and adopted by the PDG [20, 25]:</p>
+<ul>
+<li>$\delta R_{\pi^-\to\mu^-\nu}^{\text{phys}} = 1.76(21) \% = \delta^{\text{EM}}_{\pi \to \mu \nu}$</li>
+<li>$\delta R_{K^-\to\mu^-\nu}^{\text{phys}} = 0.64(24) \% =
+ \delta^{\text{EM}}_{K \to \mu \nu} + \delta^{\text{IB}}_{K \to \mu \nu}$</li>
+</ul>
 <p>[26] V. Cirigliano and H. Neufeld, Phys. Lett. B 700 (2011) 7 [arXiv:1102.0563 [hep-ph]].</p>
 <p>Taking the experimental values Γ(π− → µ−ν¯µ[γ]) = 3.8408(7)·107s−1 and Γ(K− → µ −ν¯µ[γ]) = 5.134(11) · 107s−1 from the PDG [20] and using our results (101) - (102), we obtain</p>
 <p>f(0)π|Vud| = 127.28 (2)exp (12)th MeV = 127.28 (12) MeV - consistent with PDG based on Cirigliano Neufeld 2011<br>
@@ -13413,7 +13411,7 @@ the ChPT prediction of Ref. [26] appears to be mainly due to a different strong 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[168]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13472,7 +13470,7 @@ the ChPT prediction of Ref. [26] appears to be mainly due to a different strong 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[161]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13538,23 +13536,88 @@ updated HFLAV 2018 precision 0.68%
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[162]:</div>
+<div class="prompt input_prompt">In&nbsp;[71]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
-<span class="c">## dRrad_K_munu</span>
+<span class="c">## compare f * R for</span>
+<span class="c">## - Cirigliano and Neufeld 2011</span>
+<span class="c">## - Di Carlo 2019</span>
 <span class="c">##</span>
-<span class="c">## preliminary HFLAV 2018 uses R.Decker, M. Finkemeier, Nucl.Phys.Proc.Suppl. 40 (1995) 453-461</span>
-<span class="c">##</span>
-<span class="c">## Cirigliano and Neufeld 2011 give formulas to compute it but not the number</span>
-<span class="c">## PDG 2016 and Di Carlo 2019 report the number -&gt; adopt that for HFLAV 2018</span>
-<span class="c">##</span>
-<span class="n">dRrad_K_munu_hflav18_prelim</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.3</span> <span class="n">±</span> <span class="mf">0.2</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span>
-<span class="n">dRrad_K_munu_hflav18</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.07</span> <span class="n">±</span> <span class="mf">0.21</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span>
-<span class="nb">nothing</span>
+
+<span class="c">##--- Cirigliano Neufeld 2011</span>
+<span class="n">dRrad_pimu</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.76</span> <span class="n">±</span> <span class="mf">0.21</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="c"># 0.0176(21)</span>
+<span class="n">dRrad_kmu</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.07</span> <span class="n">±</span> <span class="mf">0.21</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="c"># 0.0107(21)</span>
+<span class="n">dRrad_kmu_by_pimu</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.69</span> <span class="n">±</span> <span class="mf">0.17</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="c"># = -0.069(17)</span>
+
+<span class="c">##--- Di Carlo 2019</span>
+<span class="n">dRrad_pimu_phys</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.53</span> <span class="n">±</span> <span class="mf">0.19</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="c"># 1.53(19)</span>
+<span class="n">dRrad_kmu_phys</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.24</span> <span class="n">±</span> <span class="mf">0.10</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="c"># 0.24(10)</span>
+<span class="n">dRrad_kmu_by_pimu_phys</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.29</span> <span class="n">±</span> <span class="mf">0.14</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="c"># modified from -0.0126(14) which seems wrong</span>
+
+<span class="c">## FLAG 2019</span>
+<span class="n">f_Kpm_by_f_pipm</span> <span class="o">=</span> <span class="mf">1.1932</span> <span class="n">±</span> <span class="mf">0.0019</span> <span class="c">## FLAG 2019</span>
+<span class="n">f_K_by_f_pi</span>     <span class="o">=</span> <span class="mf">1.1966</span> <span class="n">±</span> <span class="mf">0.0013</span> <span class="c">## FLAG 2019 + Di Carlo 2019 p.45</span>
+<span class="n">f_Kpm</span> <span class="o">=</span> <span class="mf">155.7</span> <span class="n">±</span> <span class="mf">0.3</span> <span class="c">## FLAG 2019</span>
+<span class="n">f_K</span> <span class="o">=</span> <span class="mf">156.11</span> <span class="n">±</span> <span class="mf">0.21</span> <span class="c">## FLAG 2019 + Di Carlo 2019 p.45</span>
+
+<span class="n">tmp</span> <span class="o">=</span> <span class="n">f_Kpm_by_f_pipm</span><span class="o">^</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">dRrad_kmu_by_pimu</span><span class="p">)</span>
+<span class="nd">@printf</span> <span class="s">&quot;(f_k/f_pi)^2 * R_K/pi, Cirigliano Neufeld 2011: </span><span class="si">%.4f</span><span class="s"> +- </span><span class="si">%.2f%%</span><span class="se">\n</span><span class="s">&quot;</span> <span class="n">tmp</span><span class="o">.</span><span class="n">val</span> <span class="p">(</span><span class="n">tmp</span><span class="o">.</span><span class="n">err</span> <span class="o">/</span> <span class="n">tmp</span><span class="o">.</span><span class="n">val</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span>
+<span class="n">f_K_by_f_pi_R_cn2011</span> <span class="o">=</span> <span class="n">tmp</span>
+
+<span class="n">tmp</span> <span class="o">=</span> <span class="n">f_K_by_f_pi</span><span class="o">^</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">dRrad_kmu_by_pimu_phys</span><span class="p">)</span>
+<span class="nd">@printf</span> <span class="s">&quot;(f_k/f_pi)^2 * R_K/pi, Di Carlo 2019          : </span><span class="si">%.4f</span><span class="s"> +- </span><span class="si">%.2f%%</span><span class="se">\n</span><span class="s">&quot;</span> <span class="n">tmp</span><span class="o">.</span><span class="n">val</span> <span class="p">(</span><span class="n">tmp</span><span class="o">.</span><span class="n">err</span> <span class="o">/</span> <span class="n">tmp</span><span class="o">.</span><span class="n">val</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span>
+<span class="n">f_K_by_f_pi_R_d2019</span> <span class="o">=</span> <span class="n">tmp</span>
+
+<span class="n">tmp</span> <span class="o">=</span> <span class="n">f_Kpm</span><span class="o">^</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">dRrad_kmu</span><span class="p">)</span>
+<span class="nd">@printf</span> <span class="s">&quot;f_k^2 * R_Kmu2, Cirigliano Neufeld 2011: </span><span class="si">%.4f</span><span class="s"> +- </span><span class="si">%.2f%%</span><span class="se">\n</span><span class="s">&quot;</span> <span class="n">tmp</span><span class="o">.</span><span class="n">val</span> <span class="p">(</span><span class="n">tmp</span><span class="o">.</span><span class="n">err</span> <span class="o">/</span> <span class="n">tmp</span><span class="o">.</span><span class="n">val</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span>
+<span class="n">f_K_R_cn2011</span> <span class="o">=</span> <span class="n">tmp</span>
+
+<span class="n">tmp</span> <span class="o">=</span> <span class="n">f_K</span><span class="o">^</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">dRrad_kmu_phys</span><span class="p">)</span>
+<span class="nd">@printf</span> <span class="s">&quot;f_k^2 * R_Kmu2, Di Carlo 2019          : </span><span class="si">%.4f</span><span class="s"> +- </span><span class="si">%.2f%%</span><span class="se">\n</span><span class="s">&quot;</span> <span class="n">tmp</span><span class="o">.</span><span class="n">val</span> <span class="p">(</span><span class="n">tmp</span><span class="o">.</span><span class="n">err</span> <span class="o">/</span> <span class="n">tmp</span><span class="o">.</span><span class="n">val</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span>
+<span class="n">f_K_R_d2019</span> <span class="o">=</span> <span class="n">tmp</span>
+
+<span class="n">print</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+<span class="n">print</span><span class="p">(</span><span class="s">&quot;(f_k/f_pi)^2 * R_K/pi, Cirigliano Neufeld 2011: &quot;</span><span class="p">,</span> <span class="n">f_K_by_f_pi_R_cn2011</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+<span class="n">print</span><span class="p">(</span><span class="s">&quot;(f_k/f_pi)^2 * R_K/pi, Di Carlo 2019:           &quot;</span><span class="p">,</span> <span class="n">f_K_by_f_pi_R_d2019</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+<span class="n">print</span><span class="p">(</span><span class="s">&quot;f_k^2 * R_Kmu2, Cirigliano Neufeld 2011: &quot;</span><span class="p">,</span> <span class="n">f_K_R_cn2011</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+<span class="n">print</span><span class="p">(</span><span class="s">&quot;f_k^2 * R_Kmu2, Di Carlo 2019:           &quot;</span><span class="p">,</span> <span class="n">f_K_R_d2019</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+
+<span class="n">print</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+<span class="n">print</span><span class="p">(</span><span class="s">&quot;(f_k/f_pi)^2 * R_K/pi, change: &quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">f_Kpm_by_f_pipm_R_d2019</span><span class="o">/</span><span class="n">f_Kpm_by_f_pipm_R_cn2011</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+<span class="n">print</span><span class="p">(</span><span class="s">&quot;f_k^2 * R_Kmu2,        change: &quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">f_K_R_d2019</span><span class="o">/</span><span class="n">f_K_R_cn2011</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(f_k/f_pi)^2 * R_K/pi, Cirigliano Neufeld 2011: 1.4139 +- 0.36%
+(f_k/f_pi)^2 * R_K/pi, Di Carlo 2019          : 1.4134 +- 0.26%
+f_k^2 * R_Kmu2, Cirigliano Neufeld 2011: 24501.8846 +- 0.44%
+f_k^2 * R_Kmu2, Di Carlo 2019          : 24428.8209 +- 0.29%
+
+(f_k/f_pi)^2 * R_K/pi, Cirigliano Neufeld 2011: 1.41390 ± 0.00511
+(f_k/f_pi)^2 * R_K/pi, Di Carlo 2019:           1.41338 ± 0.00367
+f_k^2 * R_Kmu2, Cirigliano Neufeld 2011: 24501.88464 ± 107.26980
+f_k^2 * R_Kmu2, Di Carlo 2019:           24428.82090 ± 70.09636
+
+(f_k/f_pi)^2 * R_K/pi, change: -0.63749 ± 0.63139
+f_k^2 * R_Kmu2,        change: -0.29820 ± 0.52189
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -13609,7 +13672,7 @@ $</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[163]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13664,7 +13727,7 @@ Rrad_tauK_by_taupi = 1.0003 ± 0.0044
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[164]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13838,7 +13901,7 @@ refereed journals, or that are straightforward conference updates of published a
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[165]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13859,7 +13922,7 @@ refereed journals, or that are straightforward conference updates of published a
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[165]:</div>
+    <div class="prompt output_prompt">Out[22]:</div>
 
 
 
