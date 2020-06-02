@@ -13102,23 +13102,18 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[79]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="k">using</span> <span class="n">DataFrames</span>
 
 <span class="k">using</span> <span class="n">TextParse</span>
-<span class="k">using</span> <span class="n">DelimitedFiles</span>
 <span class="k">using</span> <span class="n">CSV</span>
-<span class="k">using</span> <span class="n">CSVFiles</span>
-<span class="c">## using TableReader</span>
 
 <span class="k">using</span> <span class="n">FileIO</span>
 
 <span class="c">## using Plots</span>
 <span class="k">using</span> <span class="n">StatsPlots</span>
-<span class="c">## using GR</span>
-<span class="c">## using Gadfly</span>
 
 <span class="k">using</span> <span class="n">LaTeXStrings</span>
 <span class="k">using</span> <span class="n">Query</span>
@@ -13131,10 +13126,14 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[80]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="c">## const PLOTS_DEFAULTS = Dict(:theme =&gt; :juno)</span>
+<div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
+<span class="c">## configure plots</span>
+<span class="c">##</span>
+
+<span class="c">## const PLOTS_DEFAULTS = Dict(:theme =&gt; :juno)</span>
 
 <span class="n">Plots</span><span class="o">.</span><span class="n">default</span><span class="p">(</span>
   <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">700</span><span class="p">,</span> <span class="mi">400</span><span class="p">),</span>
@@ -13156,7 +13155,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[80]:</div>
+    <div class="prompt output_prompt">Out[2]:</div>
 
 
 
@@ -13173,7 +13172,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[81]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13188,11 +13187,11 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[82]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
-<span class="c">## readlines_enc() enhanced readlines() function</span>
+<span class="c">## readlines_enh() enhanced readlines() function</span>
 <span class="c">## - &lt;skipto&gt; begin reading from indicated line</span>
 <span class="c">## - &lt;limit&gt; number of lines to read</span>
 <span class="c">##</span>
@@ -13201,6 +13200,9 @@ div#notebook {
     <span class="n">readlines_enh</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">skipto</span><span class="o">=</span><span class="n">skipto</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">;</span> <span class="n">kw</span><span class="o">...</span><span class="p">)</span>
   <span class="k">end</span>
 <span class="k">end</span>
+<span class="c">##</span>
+<span class="c">## readlines_enh() from file stream</span>
+<span class="c">##</span>
 <span class="n">readlines_enh</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">stdin</span><span class="p">;</span> <span class="n">skipto</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="nb">Inf</span><span class="p">,</span> <span class="n">kw</span><span class="o">...</span><span class="p">)</span> <span class="o">=</span>
   <span class="n">collect</span><span class="p">(</span><span class="n">Iterators</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">Iterators</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">eachline</span><span class="p">(</span><span class="n">s</span><span class="p">;</span> <span class="n">kw</span><span class="o">...</span><span class="p">),</span> <span class="n">skipto</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">limit</span><span class="p">))</span>
 <span class="nb">nothing</span>
@@ -13213,7 +13215,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[83]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13228,18 +13230,20 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[84]:</div>
+<div class="prompt input_prompt">In&nbsp;[58]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
-<span class="c">## read sigma val and unc in energy bins</span>
+<span class="c">## read sigma val and unc of cross-section by energy bin</span>
+<span class="c">## - data in lines 30..366</span>
+<span class="c">## - format: &quot;2.8  : 2.9           0.009181                 0.0132598&quot;</span>
 <span class="c">##</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">CSV</span><span class="o">.</span><span class="n">read</span><span class="p">(</span>
   <span class="s">&quot;babar-2012/BABAR_ISR2pi_EPAPS.txt&quot;</span><span class="p">,</span>
   <span class="n">skipto</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">337</span><span class="p">,</span> <span class="n">delim</span><span class="o">=</span><span class="sc">&#39; &#39;</span><span class="p">,</span> <span class="n">ignorerepeated</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span>
   <span class="n">header</span><span class="o">=</span><span class="p">[</span><span class="o">:</span><span class="n">E_l</span><span class="p">,</span> <span class="o">:</span><span class="n">colon</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h</span><span class="p">,</span> <span class="o">:</span><span class="n">sigma_val</span><span class="p">,</span> <span class="o">:</span><span class="n">sigma_unc</span><span class="p">]</span>
 <span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">.!</span><span class="p">[(</span><span class="n">x</span> <span class="kp">in</span> <span class="p">[</span><span class="o">:</span><span class="n">space</span><span class="p">,</span> <span class="o">:</span><span class="n">colon</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="kp">in</span> <span class="n">names</span><span class="p">(</span><span class="n">df</span><span class="p">)]</span> <span class="p">]</span>
+<span class="n">select!</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">Not</span><span class="p">(</span><span class="o">:</span><span class="n">colon</span><span class="p">))</span>
 <span class="c">##--- compute mid-bin energy</span>
 <span class="n">insertcols!</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">:</span><span class="n">E</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_l</span><span class="p">]</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">insertcols!</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">:</span><span class="n">sigma_val_min</span> <span class="o">=&gt;</span> <span class="n">df</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">sigma_val</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">sigma_unc</span><span class="p">])</span>
@@ -13263,7 +13267,7 @@ div#notebook {
 
 
 <div class="output_html rendered_html output_subarea ">
-<table class="data-frame"><thead><tr><th></th><th>E_l</th><th>colon</th><th>sigma_val_max</th><th>sigma_val_min</th><th>E</th><th>E_h</th><th>sigma_val</th><th>sigma_unc</th></tr><tr><th></th><th>Float64</th><th>String</th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th></tr></thead><tbody><p>4 rows × 8 columns</p><tr><th>1</th><td>0.3</td><td>:</td><td>28.1899</td><td>22.791</td><td>0.305</td><td>0.31</td><td>25.4904</td><td>2.69943</td></tr><tr><th>2</th><td>0.31</td><td>:</td><td>38.3948</td><td>32.5655</td><td>0.315</td><td>0.32</td><td>35.4801</td><td>2.91464</td></tr><tr><th>3</th><td>0.32</td><td>:</td><td>48.5325</td><td>42.4391</td><td>0.325</td><td>0.33</td><td>45.4858</td><td>3.04669</td></tr><tr><th>4</th><td>0.33</td><td>:</td><td>54.916</td><td>48.6489</td><td>0.335</td><td>0.34</td><td>51.7825</td><td>3.13355</td></tr></tbody></table>
+<table class="data-frame"><thead><tr><th></th><th>E_l</th><th>E_h</th><th>sigma_val_max</th><th>sigma_val_min</th><th>E</th><th>sigma_val</th><th>sigma_unc</th></tr><tr><th></th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th></tr></thead><tbody><p>4 rows × 7 columns</p><tr><th>1</th><td>0.3</td><td>0.31</td><td>28.1899</td><td>22.791</td><td>0.305</td><td>25.4904</td><td>2.69943</td></tr><tr><th>2</th><td>0.31</td><td>0.32</td><td>38.3948</td><td>32.5655</td><td>0.315</td><td>35.4801</td><td>2.91464</td></tr><tr><th>3</th><td>0.32</td><td>0.33</td><td>48.5325</td><td>42.4391</td><td>0.325</td><td>45.4858</td><td>3.04669</td></tr><tr><th>4</th><td>0.33</td><td>0.34</td><td>54.916</td><td>48.6489</td><td>0.335</td><td>51.7825</td><td>3.13355</td></tr></tbody></table>
 </div>
 
 </div>
@@ -13274,10 +13278,11 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[85]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
+<span class="c">## commented out!</span>
 <span class="c">## explore alternative ways of reading the data</span>
 <span class="c">##</span>
 
@@ -13319,7 +13324,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[86]:</div>
+<div class="prompt input_prompt">In&nbsp;[60]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13347,10 +13352,10 @@ div#notebook {
 <span class="c">##--- read numeric values</span>
 <span class="n">df_tmp</span> <span class="o">=</span> <span class="n">CSV</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="kt">IOBuffer</span><span class="p">(</span><span class="n">line_tmp</span><span class="p">),</span> <span class="n">delim</span><span class="o">=</span><span class="sc">&#39; &#39;</span><span class="p">,</span> <span class="n">ignorerepeated</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">false</span><span class="p">)</span>
 <span class="c">##--- remove columns with no data</span>
-<span class="n">df_tmp</span> <span class="o">=</span> <span class="n">df_tmp</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="n">eltype</span><span class="o">.</span><span class="p">(</span><span class="n">eachcol</span><span class="p">(</span><span class="n">df_tmp</span><span class="p">))</span> <span class="o">.!=</span> <span class="n">Missing</span><span class="p">]</span>
+<span class="n">df_tmp</span> <span class="o">=</span> <span class="n">df_tmp</span><span class="p">[</span><span class="o">!</span><span class="p">,</span> <span class="n">eltype</span><span class="o">.</span><span class="p">(</span><span class="n">eachcol</span><span class="p">(</span><span class="n">df_tmp</span><span class="p">))</span> <span class="o">.!=</span> <span class="n">Missing</span><span class="p">]</span>
 <span class="c">##--- add total systematic uncertainties to dataframe of syst. uncert.</span>
 <span class="n">insertcols!</span><span class="p">(</span><span class="n">df_syst</span><span class="p">,</span> <span class="n">ncol</span><span class="p">(</span><span class="n">df_syst</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="o">:</span><span class="n">unc</span> <span class="o">=&gt;</span> <span class="kt">Vector</span><span class="p">(</span><span class="n">df_tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">:</span><span class="p">]))</span>
-<span class="n">insertcols!</span><span class="p">(</span><span class="n">df_syst</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">:</span><span class="n">E</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">df_syst</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_l</span><span class="p">]</span> <span class="o">+</span> <span class="n">df_syst</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">insertcols!</span><span class="p">(</span><span class="n">df_syst</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">:</span><span class="n">E</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">df_syst</span><span class="p">[</span><span class="o">!</span><span class="p">,</span> <span class="o">:</span><span class="n">E_l</span><span class="p">]</span> <span class="o">+</span> <span class="n">df_syst</span><span class="p">[</span><span class="o">!</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
 <span class="nb">nothing</span>
 </pre></div>
 
@@ -13361,12 +13366,12 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[87]:</div>
+<div class="prompt input_prompt">In&nbsp;[61]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
-<span class="c">## get statistical covariance</span>
-<span class="c">## test code here</span>
+<span class="c">## commented out!</span>
+<span class="c">## alternative ways to read statistical covariance</span>
 <span class="c">##</span>
 
 <span class="k">if</span> <span class="kc">false</span>
@@ -13440,14 +13445,15 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[88]:</div>
+<div class="prompt input_prompt">In&nbsp;[62]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="k">if</span> <span class="kc">false</span>
-<span class="c">##</span>
+<div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
+<span class="c">## commented out!</span>
 <span class="c">## get statistical covariance, alternative old way</span>
 <span class="c">##</span>
 
+<span class="k">if</span> <span class="kc">false</span>
 <span class="c">##</span>
 <span class="c">## the txt file lists the statistical covariance row by row using the energy bins</span>
 <span class="c">## defined for reporting the cross section, in the same order</span>
@@ -13497,7 +13503,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[89]:</div>
+<div class="prompt input_prompt">In&nbsp;[63]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13559,7 +13565,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[90]:</div>
+<div class="prompt input_prompt">In&nbsp;[64]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">pl1</span> <span class="o">=</span> <span class="nd">@df</span> <span class="n">df</span> <span class="n">plot</span><span class="p">(</span>
@@ -13586,7 +13592,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[90]:</div>
+    <div class="prompt output_prompt">Out[64]:</div>
 
 
 
@@ -13604,7 +13610,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[91]:</div>
+<div class="prompt input_prompt">In&nbsp;[65]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">pl2</span> <span class="o">=</span> <span class="nd">@df</span> <span class="n">df</span> <span class="n">plot</span><span class="p">(</span>
@@ -13632,7 +13638,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[91]:</div>
+    <div class="prompt output_prompt">Out[65]:</div>
 
 
 
@@ -13650,7 +13656,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[92]:</div>
+<div class="prompt input_prompt">In&nbsp;[66]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13677,7 +13683,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[93]:</div>
+<div class="prompt input_prompt">In&nbsp;[67]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13712,36 +13718,17 @@ div#notebook {
 
 <span class="c">## println(&quot;range of covariance values:&quot;, cov_clims)</span>
 <span class="c">## println(&quot;note: color legend is not accurate, does not match custom color limits &quot;, cov_clims)</span>
+<span class="nb">nothing</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[93]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>(-36.34133490977312, 208.98175307466437)</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[94]:</div>
+<div class="prompt input_prompt">In&nbsp;[68]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13768,7 +13755,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[94]:</div>
+    <div class="prompt output_prompt">Out[68]:</div>
 
 
 
@@ -13786,7 +13773,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[95]:</div>
+<div class="prompt input_prompt">In&nbsp;[69]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13813,7 +13800,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[95]:</div>
+    <div class="prompt output_prompt">Out[69]:</div>
 
 
 
@@ -13831,7 +13818,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[96]:</div>
+<div class="prompt input_prompt">In&nbsp;[70]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13881,7 +13868,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[96]:</div>
+    <div class="prompt output_prompt">Out[70]:</div>
 
 
 
@@ -13893,6 +13880,19 @@ div#notebook {
 
 </div>
 
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span>
+</pre></div>
+
+    </div>
 </div>
 </div>
 
