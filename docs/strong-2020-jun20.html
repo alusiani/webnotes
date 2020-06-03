@@ -13230,7 +13230,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[58]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13244,10 +13244,12 @@ div#notebook {
   <span class="n">header</span><span class="o">=</span><span class="p">[</span><span class="o">:</span><span class="n">E_l</span><span class="p">,</span> <span class="o">:</span><span class="n">colon</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h</span><span class="p">,</span> <span class="o">:</span><span class="n">sigma_val</span><span class="p">,</span> <span class="o">:</span><span class="n">sigma_unc</span><span class="p">]</span>
 <span class="p">)</span>
 <span class="n">select!</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">Not</span><span class="p">(</span><span class="o">:</span><span class="n">colon</span><span class="p">))</span>
+
 <span class="c">##--- compute mid-bin energy</span>
-<span class="n">insertcols!</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">:</span><span class="n">E</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_l</span><span class="p">]</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">insertcols!</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">:</span><span class="n">sigma_val_min</span> <span class="o">=&gt;</span> <span class="n">df</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">sigma_val</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">sigma_unc</span><span class="p">])</span>
-<span class="n">insertcols!</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">:</span><span class="n">sigma_val_max</span> <span class="o">=&gt;</span> <span class="n">df</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">sigma_val</span><span class="p">]</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">sigma_unc</span><span class="p">])</span>
+<span class="n">transform!</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="p">[</span><span class="o">:</span><span class="n">E_l</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="p">(</span> <span class="p">(</span><span class="n">E_l</span><span class="p">,</span> <span class="n">E_h</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">E_l</span><span class="o">+</span><span class="n">E_h</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="p">)</span> <span class="o">=&gt;</span> <span class="o">:</span><span class="n">E</span><span class="p">)</span>
+<span class="c">##--- cross-section +- 1sigma</span>
+<span class="n">transform!</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="p">[</span><span class="o">:</span><span class="n">sigma_val</span><span class="p">,</span> <span class="o">:</span><span class="n">sigma_unc</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="p">(</span> <span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">unc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">val</span><span class="o">-</span><span class="n">unc</span> <span class="p">)</span> <span class="o">=&gt;</span> <span class="o">:</span><span class="n">sigma_val_min</span><span class="p">)</span>
+<span class="n">transform!</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="p">[</span><span class="o">:</span><span class="n">sigma_val</span><span class="p">,</span> <span class="o">:</span><span class="n">sigma_unc</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="p">(</span> <span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">unc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">val</span><span class="o">+</span><span class="n">unc</span> <span class="p">)</span> <span class="o">=&gt;</span> <span class="o">:</span><span class="n">sigma_val_max</span><span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">first</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="nb">nothing</span>
 </pre></div>
@@ -13267,7 +13269,7 @@ div#notebook {
 
 
 <div class="output_html rendered_html output_subarea ">
-<table class="data-frame"><thead><tr><th></th><th>E_l</th><th>E_h</th><th>sigma_val_max</th><th>sigma_val_min</th><th>E</th><th>sigma_val</th><th>sigma_unc</th></tr><tr><th></th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th></tr></thead><tbody><p>4 rows × 7 columns</p><tr><th>1</th><td>0.3</td><td>0.31</td><td>28.1899</td><td>22.791</td><td>0.305</td><td>25.4904</td><td>2.69943</td></tr><tr><th>2</th><td>0.31</td><td>0.32</td><td>38.3948</td><td>32.5655</td><td>0.315</td><td>35.4801</td><td>2.91464</td></tr><tr><th>3</th><td>0.32</td><td>0.33</td><td>48.5325</td><td>42.4391</td><td>0.325</td><td>45.4858</td><td>3.04669</td></tr><tr><th>4</th><td>0.33</td><td>0.34</td><td>54.916</td><td>48.6489</td><td>0.335</td><td>51.7825</td><td>3.13355</td></tr></tbody></table>
+<table class="data-frame"><thead><tr><th></th><th>E_l</th><th>E_h</th><th>sigma_val</th><th>sigma_unc</th><th>E</th><th>sigma_val_min</th><th>sigma_val_max</th></tr><tr><th></th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th></tr></thead><tbody><p>4 rows × 7 columns</p><tr><th>1</th><td>0.3</td><td>0.31</td><td>25.4904</td><td>2.69943</td><td>0.305</td><td>22.791</td><td>28.1899</td></tr><tr><th>2</th><td>0.31</td><td>0.32</td><td>35.4801</td><td>2.91464</td><td>0.315</td><td>32.5655</td><td>38.3948</td></tr><tr><th>3</th><td>0.32</td><td>0.33</td><td>45.4858</td><td>3.04669</td><td>0.325</td><td>42.4391</td><td>48.5325</td></tr><tr><th>4</th><td>0.33</td><td>0.34</td><td>51.7825</td><td>3.13355</td><td>0.335</td><td>48.6489</td><td>54.916</td></tr></tbody></table>
 </div>
 
 </div>
@@ -13324,7 +13326,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[60]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13354,8 +13356,9 @@ div#notebook {
 <span class="c">##--- remove columns with no data</span>
 <span class="n">df_tmp</span> <span class="o">=</span> <span class="n">df_tmp</span><span class="p">[</span><span class="o">!</span><span class="p">,</span> <span class="n">eltype</span><span class="o">.</span><span class="p">(</span><span class="n">eachcol</span><span class="p">(</span><span class="n">df_tmp</span><span class="p">))</span> <span class="o">.!=</span> <span class="n">Missing</span><span class="p">]</span>
 <span class="c">##--- add total systematic uncertainties to dataframe of syst. uncert.</span>
-<span class="n">insertcols!</span><span class="p">(</span><span class="n">df_syst</span><span class="p">,</span> <span class="n">ncol</span><span class="p">(</span><span class="n">df_syst</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="o">:</span><span class="n">unc</span> <span class="o">=&gt;</span> <span class="kt">Vector</span><span class="p">(</span><span class="n">df_tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">:</span><span class="p">]))</span>
-<span class="n">insertcols!</span><span class="p">(</span><span class="n">df_syst</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">:</span><span class="n">E</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">df_syst</span><span class="p">[</span><span class="o">!</span><span class="p">,</span> <span class="o">:</span><span class="n">E_l</span><span class="p">]</span> <span class="o">+</span> <span class="n">df_syst</span><span class="p">[</span><span class="o">!</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">df_syst</span><span class="o">.</span><span class="n">unc</span> <span class="o">=</span> <span class="kt">Vector</span><span class="p">(</span><span class="n">df_tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">:</span><span class="p">])</span>
+<span class="n">transform!</span><span class="p">(</span><span class="n">df_syst</span><span class="p">,</span> <span class="p">[</span><span class="o">:</span><span class="n">E_l</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="p">(</span> <span class="p">(</span><span class="n">E_l</span><span class="p">,</span> <span class="n">E_h</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">E_l</span><span class="o">+</span><span class="n">E_h</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="p">)</span> <span class="o">=&gt;</span> <span class="o">:</span><span class="n">E</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">first</span><span class="p">(</span><span class="n">df_syst</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="nb">nothing</span>
 </pre></div>
 
@@ -13363,10 +13366,29 @@ div#notebook {
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+<div class="output_html rendered_html output_subarea ">
+<table class="data-frame"><thead><tr><th></th><th>E_l</th><th>E_h</th><th>unc</th><th>E</th></tr><tr><th></th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th></tr></thead><tbody><p>4 rows × 4 columns</p><tr><th>1</th><td>0.3</td><td>0.4</td><td>13.8</td><td>0.35</td></tr><tr><th>2</th><td>0.4</td><td>0.5</td><td>8.1</td><td>0.45</td></tr><tr><th>3</th><td>0.5</td><td>0.6</td><td>10.2</td><td>0.55</td></tr><tr><th>4</th><td>0.6</td><td>0.9</td><td>5.0</td><td>0.75</td></tr></tbody></table>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[61]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13445,7 +13467,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[62]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13503,7 +13525,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[63]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13528,12 +13550,13 @@ div#notebook {
 <span class="c">## this dataframe is used for doing a surface plot</span>
 <span class="c">##</span>
 
-<span class="n">insertcols!</span><span class="p">(</span><span class="n">df_stat</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">:</span><span class="n">E_l_c</span> <span class="o">=&gt;</span> <span class="n">repeat</span><span class="p">(</span><span class="kt">Vector</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_l</span><span class="p">]),</span> <span class="n">outer</span><span class="o">=</span><span class="n">nrow</span><span class="p">(</span><span class="n">df</span><span class="p">)))</span>
-<span class="n">insertcols!</span><span class="p">(</span><span class="n">df_stat</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h_c</span> <span class="o">=&gt;</span> <span class="n">repeat</span><span class="p">(</span><span class="kt">Vector</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h</span><span class="p">]),</span> <span class="n">outer</span><span class="o">=</span><span class="n">nrow</span><span class="p">(</span><span class="n">df</span><span class="p">)))</span>
-<span class="n">insertcols!</span><span class="p">(</span><span class="n">df_stat</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">:</span><span class="n">E_l_r</span> <span class="o">=&gt;</span> <span class="n">repeat</span><span class="p">(</span><span class="kt">Vector</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_l</span><span class="p">]),</span> <span class="n">inner</span><span class="o">=</span><span class="n">nrow</span><span class="p">(</span><span class="n">df</span><span class="p">)))</span>
-<span class="n">insertcols!</span><span class="p">(</span><span class="n">df_stat</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h_r</span> <span class="o">=&gt;</span> <span class="n">repeat</span><span class="p">(</span><span class="kt">Vector</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h</span><span class="p">]),</span> <span class="n">inner</span><span class="o">=</span><span class="n">nrow</span><span class="p">(</span><span class="n">df</span><span class="p">)))</span>
-<span class="n">insertcols!</span><span class="p">(</span><span class="n">df_stat</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">:</span><span class="n">E_c</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">df_stat</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_l_c</span><span class="p">]</span><span class="o">+</span><span class="n">df_stat</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h_c</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">insertcols!</span><span class="p">(</span><span class="n">df_stat</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">:</span><span class="n">E_r</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="n">df_stat</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_l_r</span><span class="p">]</span><span class="o">+</span><span class="n">df_stat</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h_r</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">df_stat</span><span class="o">.</span><span class="n">E_l_c</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="kt">Vector</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_l</span><span class="p">]),</span> <span class="n">outer</span><span class="o">=</span><span class="n">nrow</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
+<span class="n">df_stat</span><span class="o">.</span><span class="n">E_h_c</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="kt">Vector</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h</span><span class="p">]),</span> <span class="n">outer</span><span class="o">=</span><span class="n">nrow</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
+<span class="n">df_stat</span><span class="o">.</span><span class="n">E_l_r</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="kt">Vector</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_l</span><span class="p">]),</span> <span class="n">inner</span><span class="o">=</span><span class="n">nrow</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
+<span class="n">df_stat</span><span class="o">.</span><span class="n">E_h_r</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="kt">Vector</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h</span><span class="p">]),</span> <span class="n">inner</span><span class="o">=</span><span class="n">nrow</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
+<span class="n">transform!</span><span class="p">(</span><span class="n">df_stat</span><span class="p">,</span> <span class="p">[</span><span class="o">:</span><span class="n">E_l_c</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h_c</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="p">(</span> <span class="p">(</span><span class="n">E_l</span><span class="p">,</span> <span class="n">E_h</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">E_l</span><span class="o">+</span><span class="n">E_h</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="p">)</span> <span class="o">=&gt;</span> <span class="o">:</span><span class="n">E_c1</span><span class="p">)</span>
+<span class="n">transform!</span><span class="p">(</span><span class="n">df_stat</span><span class="p">,</span> <span class="p">[</span><span class="o">:</span><span class="n">E_l_r</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h_r</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="p">(</span> <span class="p">(</span><span class="n">E_l</span><span class="p">,</span> <span class="n">E_h</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">E_l</span><span class="o">+</span><span class="n">E_h</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="p">)</span> <span class="o">=&gt;</span> <span class="o">:</span><span class="n">E_r1</span><span class="p">)</span>
+
 <span class="n">display</span><span class="p">(</span><span class="n">first</span><span class="p">(</span><span class="n">df_stat</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="c">## show(df_stat)</span>
 <span class="nb">nothing</span>
@@ -13554,7 +13577,7 @@ div#notebook {
 
 
 <div class="output_html rendered_html output_subarea ">
-<table class="data-frame"><thead><tr><th></th><th>E_c</th><th>E_r</th><th>E_l_c</th><th>E_h_c</th><th>E_l_r</th><th>E_h_r</th><th>cov</th></tr><tr><th></th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th></tr></thead><tbody><p>4 rows × 7 columns</p><tr><th>1</th><td>0.305</td><td>0.305</td><td>0.3</td><td>0.31</td><td>0.3</td><td>0.31</td><td>7.16412</td></tr><tr><th>2</th><td>0.315</td><td>0.305</td><td>0.31</td><td>0.32</td><td>0.3</td><td>0.31</td><td>0.811213</td></tr><tr><th>3</th><td>0.325</td><td>0.305</td><td>0.32</td><td>0.33</td><td>0.3</td><td>0.31</td><td>0.0292493</td></tr><tr><th>4</th><td>0.335</td><td>0.305</td><td>0.33</td><td>0.34</td><td>0.3</td><td>0.31</td><td>0.216073</td></tr></tbody></table>
+<table class="data-frame"><thead><tr><th></th><th>cov</th><th>E_l_c</th><th>E_h_c</th><th>E_l_r</th><th>E_h_r</th><th>E_c1</th><th>E_r1</th></tr><tr><th></th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th></tr></thead><tbody><p>4 rows × 7 columns</p><tr><th>1</th><td>7.16412</td><td>0.3</td><td>0.31</td><td>0.3</td><td>0.31</td><td>0.305</td><td>0.305</td></tr><tr><th>2</th><td>0.811213</td><td>0.31</td><td>0.32</td><td>0.3</td><td>0.31</td><td>0.315</td><td>0.305</td></tr><tr><th>3</th><td>0.0292493</td><td>0.32</td><td>0.33</td><td>0.3</td><td>0.31</td><td>0.325</td><td>0.305</td></tr><tr><th>4</th><td>0.216073</td><td>0.33</td><td>0.34</td><td>0.3</td><td>0.31</td><td>0.335</td><td>0.305</td></tr></tbody></table>
 </div>
 
 </div>
@@ -13565,7 +13588,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[64]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">pl1</span> <span class="o">=</span> <span class="nd">@df</span> <span class="n">df</span> <span class="n">plot</span><span class="p">(</span>
@@ -13592,7 +13615,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[64]:</div>
+    <div class="prompt output_prompt">Out[12]:</div>
 
 
 
@@ -13610,7 +13633,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[65]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">pl2</span> <span class="o">=</span> <span class="nd">@df</span> <span class="n">df</span> <span class="n">plot</span><span class="p">(</span>
@@ -13638,7 +13661,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[65]:</div>
+    <div class="prompt output_prompt">Out[13]:</div>
 
 
 
@@ -13656,7 +13679,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[66]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13680,10 +13703,42 @@ div#notebook {
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_text output_error">
+<pre>
+Cannot convert Symbol to series data for plotting
+
+Stacktrace:
+ [1] _prepare_series_data(::Symbol) at /home/lusiani/.julia/packages/RecipesPipeline/5b2IP/src/series.jl:8
+ [2] _series_data_vector(::Symbol, ::Dict{Symbol,Any}) at /home/lusiani/.julia/packages/RecipesPipeline/5b2IP/src/series.jl:27
+ [3] macro expansion at /home/lusiani/.julia/packages/RecipesPipeline/5b2IP/src/series.jl:138 [inlined]
+ [4] apply_recipe(::Dict{Symbol,Any}, ::Type{RecipesPipeline.SliceIt}, ::Symbol, ::Symbol, ::Array{Float64,1}) at /home/lusiani/.julia/packages/RecipesBase/jcXIg/src/RecipesBase.jl:281
+ [5] _process_userrecipes!(::Plots.Plot{Plots.PyPlotBackend}, ::Dict{Symbol,Any}, ::Tuple{Symbol,Symbol,Array{Float64,1}}) at /home/lusiani/.julia/packages/RecipesPipeline/5b2IP/src/user_recipe.jl:35
+ [6] recipe_pipeline!(::Plots.Plot{Plots.PyPlotBackend}, ::Dict{Symbol,Any}, ::Tuple{Symbol,Symbol,Array{Float64,1}}) at /home/lusiani/.julia/packages/RecipesPipeline/5b2IP/src/RecipesPipeline.jl:68
+ [7] _plot!(::Plots.Plot{Plots.PyPlotBackend}, ::Dict{Symbol,Any}, ::Tuple{Symbol,Symbol,Array{Float64,1}}) at /home/lusiani/.julia/packages/Plots/JKY3H/src/plot.jl:167
+ [8] plot(::Symbol, ::Vararg{Any,N} where N; kw::Base.Iterators.Pairs{Symbol,Any,NTuple{6,Symbol},NamedTuple{(:title, :xlabel, :ylabel, :camera, :clims, :seriestype),Tuple{LaTeXString,String,String,Tuple{Int64,Int64},Tuple{Float64,Float64},Symbol}}}) at /home/lusiani/.julia/packages/Plots/JKY3H/src/plot.jl:57
+ [9] surface(::Symbol, ::Vararg{Any,N} where N; kw::Base.Iterators.Pairs{Symbol,Any,NTuple{5,Symbol},NamedTuple{(:title, :xlabel, :ylabel, :camera, :clims),Tuple{LaTeXString,String,String,Tuple{Int64,Int64},Tuple{Float64,Float64}}}}) at /home/lusiani/.julia/packages/RecipesBase/jcXIg/src/RecipesBase.jl:402
+ [10] add_label(::Array{String,1}, ::Function, ::Symbol, ::Vararg{Any,N} where N; kwargs::Base.Iterators.Pairs{Symbol,Any,NTuple{5,Symbol},NamedTuple{(:title, :xlabel, :ylabel, :camera, :clims),Tuple{LaTeXString,String,String,Tuple{Int64,Int64},Tuple{Float64,Float64}}}}) at /home/lusiani/.julia/packages/StatsPlots/sVXzR/src/df.jl:153
+ [11] (::var&#34;#35#36&#34;)(::DataFrame) at ./none:0
+ [12] top-level scope at In[14]:1</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[67]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13728,7 +13783,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[68]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13755,7 +13810,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[68]:</div>
+    <div class="prompt output_prompt">Out[16]:</div>
 
 
 
@@ -13773,7 +13828,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[69]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13800,7 +13855,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[69]:</div>
+    <div class="prompt output_prompt">Out[17]:</div>
 
 
 
@@ -13818,7 +13873,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[70]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13868,7 +13923,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[70]:</div>
+    <div class="prompt output_prompt">Out[18]:</div>
 
 
 
