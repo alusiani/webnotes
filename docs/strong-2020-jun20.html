@@ -13326,7 +13326,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13526,7 +13526,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">##</span>
@@ -13551,10 +13551,10 @@ div#notebook {
 <span class="c">## this dataframe is used for doing a contour plot</span>
 <span class="c">##</span>
 
-<span class="n">df_stat</span><span class="o">.</span><span class="n">E_l_c</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="kt">Vector</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_l</span><span class="p">]),</span> <span class="n">outer</span><span class="o">=</span><span class="n">nrow</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
-<span class="n">df_stat</span><span class="o">.</span><span class="n">E_h_c</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="kt">Vector</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h</span><span class="p">]),</span> <span class="n">outer</span><span class="o">=</span><span class="n">nrow</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
-<span class="n">df_stat</span><span class="o">.</span><span class="n">E_l_r</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="kt">Vector</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_l</span><span class="p">]),</span> <span class="n">inner</span><span class="o">=</span><span class="n">nrow</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
-<span class="n">df_stat</span><span class="o">.</span><span class="n">E_h_r</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="kt">Vector</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h</span><span class="p">]),</span> <span class="n">inner</span><span class="o">=</span><span class="n">nrow</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
+<span class="n">df_stat</span><span class="o">.</span><span class="n">E_l_c</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">E_l</span><span class="p">,</span> <span class="n">outer</span><span class="o">=</span><span class="n">nrow</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
+<span class="n">df_stat</span><span class="o">.</span><span class="n">E_h_c</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">E_h</span><span class="p">,</span> <span class="n">outer</span><span class="o">=</span><span class="n">nrow</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
+<span class="n">df_stat</span><span class="o">.</span><span class="n">E_l_r</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">E_l</span><span class="p">,</span> <span class="n">inner</span><span class="o">=</span><span class="n">nrow</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
+<span class="n">df_stat</span><span class="o">.</span><span class="n">E_h_r</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">E_h</span><span class="p">,</span> <span class="n">inner</span><span class="o">=</span><span class="n">nrow</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
 <span class="n">transform!</span><span class="p">(</span><span class="n">df_stat</span><span class="p">,</span> <span class="p">[</span><span class="o">:</span><span class="n">E_l_c</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h_c</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="p">(</span> <span class="p">(</span><span class="n">E_l</span><span class="p">,</span> <span class="n">E_h</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">E_l</span><span class="o">+</span><span class="n">E_h</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="p">)</span> <span class="o">=&gt;</span> <span class="o">:</span><span class="n">E_c</span><span class="p">)</span>
 <span class="n">transform!</span><span class="p">(</span><span class="n">df_stat</span><span class="p">,</span> <span class="p">[</span><span class="o">:</span><span class="n">E_l_r</span><span class="p">,</span> <span class="o">:</span><span class="n">E_h_r</span><span class="p">]</span> <span class="o">=&gt;</span> <span class="p">(</span> <span class="p">(</span><span class="n">E_l</span><span class="p">,</span> <span class="n">E_h</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">E_l</span><span class="o">+</span><span class="n">E_h</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="p">)</span> <span class="o">=&gt;</span> <span class="o">:</span><span class="n">E_r</span><span class="p">)</span>
 
