@@ -6,6 +6,41 @@ layout: post
 ## jupytext
 
 ```
+R
+> install.packages(c(
+    "yaml", "stringr",
+    "ggplot2", "scales", "grid", "latex2exp",
+    NULL
+  ))
+> install.packages("IRkernel")
+> IRkernel::installspec()
+> <ctrl-d>
+```
+
+```
+mkdir -p ../plots
+jupytext --execute tau-lfv-plots-nb.md
+```
+
+```
+mkdir -p ../plots
+jupytext tau-lfv-plots-nb.md -o tau-lfv-plots-nb.r
+sed -i -n '/^#!/,$p' tau-lfv-plots-nb.r
+chmod +x tau-lfv-plots-nb.r
+./tau-lfv-plots-nb.r --title="HFLAV" --subtitle="2023" "../data/lfv/tau-lfv-data.yaml"
+```
+
+```
+##
+## preferred colors for experiments
+##
+glv$exp_pref_col = c(
+  ATLAS = "gray",
+  NULL
+)
+```
+
+```
 Welcome to -+- lxplus989.cern.ch -+-
 lusiani@lxplus989> pip install --user -U jupytext
 Collecting jupytext
